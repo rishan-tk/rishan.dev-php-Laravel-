@@ -38,11 +38,6 @@ npm-debug.log
 yarn-error.log
 .pnpm-debug.log
 
-# Vite
-/vite.config.js
-/vite.config.ts
-/.vite
-
 ### Laravel ###
 /vendor/
 node_modules/
