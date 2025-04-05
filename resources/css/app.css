@@ -1,0 +1,28 @@
+@import './base/typography.css';
+
+@import './components/navbar.css';
+@import './components/footer.css';
+@import './components/mobile-menu.css';
+@import './components/forms.css';
+@import './components/backtotop.css';
+
+@import './layout/layout.css';
+
+@import './pages/home.css';
+@import './pages/about.css';
+@import './pages/projects.css';
+@import './pages/skills.css';
+@import './pages/contact.css';
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+

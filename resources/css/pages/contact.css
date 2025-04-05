@@ -1,0 +1,15 @@
+.socials ul > li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    padding: 0 10px;
+}
+.socials .caption {
+    width: 100%;
+}
+.socials .links {
+    width: 100%;
+}

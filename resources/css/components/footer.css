@@ -1,0 +1,77 @@
+footer {
+    padding: 5px;
+    background-color: #FFF;
+    box-shadow: inset 0px 0px 5px 5px #f1f1f1;
+}
+footer > div {
+    padding-top: 50px;
+}
+#footer-logo, #footer-links {
+    width: 50%;
+}
+#footer-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#footer-logo > img {
+    width: 66%;
+}
+#footer-links li, #footer-links i {
+    padding: 5px;
+}
+.copyright {
+    text-align: center;
+    padding: 25px 0;
+}
+
+/* Mobile Nav 1700 931
+Mobile phones Samsung+ - Ultra*/
+@media(min-width: 275px){
+    footer{
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0%;
+    }
+
+    #footer-logo > img{
+        width: 100%;
+    }
+}
+
+/* iPads, tablets */
+@media(min-width: 481px){
+}
+
+
+/* Desktop Nav 
+Small screens, laptops */
+@media(min-width: 769px){
+    footer{
+        width: 75%;
+        max-width: 75%;
+        margin-left: 25%;
+    }
+}
+
+/* Desktop, large screens 720p*/
+@media(min-width: 1025px){
+    footer{
+        width: 80%;
+        max-width: 80%;
+        margin-left: 20%;
+    }
+}
+
+/* Extra large screens, 1080p */
+@media(min-width: 1200px){
+    footer{
+        width: 85%;
+        max-width: 85%;
+        margin-left: 15%;
+    }
+
+    #footer-logo > img{
+        width: 85%;
+    }
+}

@@ -1,0 +1,61 @@
+#mobile-menu-button {
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    z-index: 1000;
+    background-color: white;
+}
+#mobile-menu-button button {
+    width: 50px;
+    height: 100%;
+}
+#mobile-menu-button i {
+    font-size: 50px;
+}
+#mobile-menu-button span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+#mobile-menu-button img {
+    height: 80%;
+    padding-right: 25px;
+}
+
+/* Mobile Nav 1700 931
+Mobile phones Samsung+ - Ultra*/
+@media(min-width: 275px){
+    #mobile-menu-button{
+        display: flex;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+}
+
+/* iPads, tablets */
+@media(min-width: 481px){
+    #mobile-menu-button{
+        font-size: 2rem;
+    }
+}
+
+
+/* Desktop Nav 
+Small screens, laptops */
+@media(min-width: 769px){
+    #mobile-menu-button{
+        display: none;
+    }
+}
+
+/* Desktop, large screens 720p*/
+@media(min-width: 1025px){
+}
+
+/* Extra large screens, 1080p */
+@media(min-width: 1200px){
+}

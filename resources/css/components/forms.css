@@ -1,0 +1,43 @@
+.contact-form > div,
+.contact-form form {
+    padding: 10px;
+}
+.contact-form form > div {
+    padding: 10px;
+}
+.contact-form .form-group {
+    margin-bottom: 15px;
+}
+.contact-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.contact-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.contact-form button:hover {
+    background-color: #45a049;
+}
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+.success-message {
+    color: #45a049;
+    margin-top: 10px;
+}

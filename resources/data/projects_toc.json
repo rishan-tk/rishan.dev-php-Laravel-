@@ -1,0 +1,93 @@
+[
+    {
+      "title": "Projects",
+      "isOpen": false,
+      "subItems": [
+        {
+          "title": "Personal Projects",
+          "isOpen": false,
+          "subItems": [
+            {
+              "title": "1. Personal Website",
+              "isOpen": false,
+              "links": [
+                { "name": "1.1 Project Aims", "href": "#1-aims" },
+                { "name": "1.2 Project Features", "href": "#1-features" },
+                { "name": "1.3 Demographic", "href": "#1-demographic" },
+                { "name": "1.4 Technologies Used", "href": "#1-tech" },
+                { "name": "1.5 Repository Link", "href": "#1-repo" }
+              ]
+            },
+            {
+              "title": "2. Discord Music Bot",
+              "isOpen": false,
+              "links": [
+                { "name": "2.1 Project Aims", "href": "#2-aims" },
+                { "name": "2.2 Project Features", "href": "#2-features" },
+                { "name": "2.3 Demographic", "href": "#2-demographic" },
+                { "name": "2.4 Technologies Used", "href": "#2-tech" },
+                { "name": "2.5 Repository Link", "href": "#2-repo" }
+              ]
+            },
+            {
+              "title": "3. Telegram E-Commerce Shop Bot",
+              "isOpen": false,
+              "links": [
+                { "name": "3.1 Project Aims", "href": "#3-aims" },
+                { "name": "3.2 Project Features", "href": "#3-features" },
+                { "name": "3.3 Demographic", "href": "#3-demographic" },
+                { "name": "3.4 Technologies Used", "href": "#3-tech" },
+                { "name": "3.5 Repository Link", "href": "#3-repo" }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Academic Projects",
+          "isOpen": false,
+          "subItems": [
+            {
+              "title": "4. Movie Database",
+              "isOpen": false,
+              "links": [
+                { "name": "4.1 Project Aims", "href": "#4-aims" },
+                { "name": "4.2 Project Features", "href": "#4-features" },
+                { "name": "4.3 Demographic", "href": "#4-demographic" },
+                { "name": "4.4 Technologies Used", "href": "#5-tech" },
+                { "name": "4.5 Repository Link", "href": "#4-repo" }
+              ]
+            },
+            {
+              "title": "5. 2D Platformer - Graphics 1 Project",
+              "isOpen": false,
+              "links": [
+                { "name": "5.1 Project Aims", "href": "#5-aims" },
+                { "name": "5.2 Project Features", "href": "#5-features" },
+                { "name": "5.3 Demographic", "href": "#5-demographic" },
+                { "name": "5.4 Technologies Used", "href": "#5-tech" },
+                { "name": "5.5 Repository Link", "href": "#5-repo" }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Work-in-Progress Projects",
+          "isOpen": false,
+          "subItems": [
+            {
+              "title": "6. Landlord Management System",
+              "isOpen": false,
+              "links": [
+                { "name": "6.1 Project Aims", "href": "#6-aims" },
+                { "name": "6.2 Project Features", "href": "#6-features" },
+                { "name": "6.3 Demographic", "href": "#6-demographic" },
+                { "name": "6.4 Technologies Used", "href": "#6-tech" },
+                { "name": "6.5 Repository Link", "href": "#6-repo" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  

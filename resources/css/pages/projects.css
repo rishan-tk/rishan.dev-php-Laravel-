@@ -1,0 +1,217 @@
+.page-intro {
+    font-size: larger;
+    padding: 25px;
+}
+
+.projects {
+    padding-bottom: 50px;
+}
+.projects-heading {
+    font-weight: bold;
+    margin-top: 10px;
+    padding-left: 10px;
+    font-size: 2rem;
+}
+
+.projects li {
+    font-weight: bold;
+}
+.projects li p {
+    font-weight: normal;
+    font-style: italic;
+}
+.projects h1, .projects h2, .projects h3, .projects h4 {
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+#tableOfContents {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+#tableOfContents ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+#tableOfContents ul ul {
+    padding-left: 20px;
+}
+#tableOfContents ul ul ul {
+    padding-left: 40px;
+}
+
+/* Mobile Nav 1700 931
+Mobile phones Samsung+ - Ultra*/
+@media(min-width: 275px){
+    /* PROJECTS PAGE */
+    .projects h1{
+        font-size: 1.75rem;
+        margin-top:10px;
+        padding-left: 5px;
+    }
+    .projects h2{
+        font-size: 1.5rem;
+        padding-left: 7px;
+    }
+    .projects h3{
+        font-size: 1.25rem;
+        padding-left: 10px;
+    }
+    .projects h4{
+        font-size: 1.1rem;
+        padding-left: 15px;
+    }
+    .projects>p{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .projects ul{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .projects a{
+        padding-left: 25px;
+    }
+    .projects-heading{
+        margin-top:10px;
+        padding-left: 2px;
+        font-size: 2rem;
+    }
+}
+
+/* iPads, tablets */
+@media(min-width: 481px){
+    .projects h1{
+        margin-top:15px;
+        padding-left: 10px;
+    }
+    .projects h2{
+        font-size: 1.75rem;
+        padding-left: 15px;
+    }
+    .projects h3{
+        font-size: 1.25rem;
+        padding-left: 20px;
+    }
+    .projects h4{
+        font-size: 1.1rem;
+        padding-left: 30px;
+    }
+    .projects>p{
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+    .projects ul{
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+    .projects a{
+        padding-left: 40px;
+    }
+    .projects-heading{
+        margin-top:15px;
+    }
+}
+
+
+/* Desktop Nav 
+Small screens, laptops */
+@media(min-width: 769px){
+    .projects h1{
+        font-size: 2rem;
+        margin-top:20px;
+        padding-left: 20px;
+    }
+    .projects h2{
+        font-size: 1.75rem;
+        padding-left: 30px;
+    }
+    .projects h3{
+        font-size: 1.25rem;
+        padding-left: 40px;
+    }
+    .projects h4{
+        font-size: 1.1rem;
+        padding-left: 50px;
+    }
+    .projects>p{
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    .projects ul{
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    .projects a{
+        padding-left: 70px;
+    }
+    .projects-heading{
+        padding-left: 10px;
+        margin-top:20px;
+        font-size: 2.25rem;
+    }
+}
+
+/* Desktop, large screens 720p*/
+@media(min-width: 1025px){
+    /* Projects Page */
+    .projects h1{
+        margin-top:25px;
+        padding-left: 25px;
+    }
+    .projects h2{
+        font-size: 1.75rem;
+        padding-left: 50px;
+    }
+    .projects h3{
+        font-size: 1.25rem;
+        padding-left: 60px;
+    }
+    .projects h4{
+        font-size: 1.1rem;
+        padding-left: 70px;
+    }
+    .projects>p{
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+    .projects ul{
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+    .projects a{
+        padding-left: 100px;
+    }
+}
+
+/* Extra large screens, 1080p */
+@media(min-width: 1200px){
+    /* Projects Page */
+    .projects h1{
+        padding-left: 30px;
+    }
+    .projects h2{
+        font-size: 1.75rem;
+        padding-left: 60px;
+    }
+    .projects h3{
+        font-size: 1.25rem;
+        padding-left: 80px;
+    }
+    .projects h4{
+        font-size: 1.1rem;
+        padding-left: 100px;
+    }
+    .projects>p{
+        padding-left: 120px;
+        padding-right: 120px;
+    }
+    .projects ul{
+        padding-left: 120px;
+        padding-right: 120px;
+    }
+    .projects a{
+        padding-left: 140px;
+    }
+}

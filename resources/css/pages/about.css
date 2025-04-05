@@ -1,0 +1,104 @@
+.about-me h1 {
+    font-weight: bold;
+}
+.about-me h2 {
+    padding: 10px 25px;
+}
+.about-me p {
+    padding: 10px 25px;
+}
+.about-me a {
+    padding-left: 10px;
+}
+/* Mobile Nav 1700 931
+Mobile phones Samsung+ - Ultra*/
+@media(min-width: 275px){
+    .about-me h1{
+        padding:10px;
+        font-size: 1.5rem;
+    }
+    .about-me h2{
+        padding:5px 15px 5px 15px;
+        font-size: 1.25rem;
+    }
+    .about-me p{
+        padding: 0 20px 10px 20px;
+    }
+    .about-me a{
+        padding-left: 10px;
+    }
+}
+
+/* iPads, tablets */
+@media(min-width: 481px){
+    .about-me h1{
+        padding:15px;
+        font-size: 1.75rem;
+    }
+    .about-me h2{
+        padding:5px 20px 5px 20px;
+        font-size: 1.5rem;
+    }
+    .about-me p{
+        padding: 0 25px 10px 25px;
+    }
+    .about-me a{
+        padding-left: 10px;
+    }
+}
+
+
+/* Desktop Nav 
+Small screens, laptops */
+@media(min-width: 769px){
+    .about-me h1{
+        padding:20px;
+        font-size: 1.75rem;
+    }
+    .about-me h2{
+        padding:10px 25px 10px 25px;
+        font-size: 1.5rem;
+    }
+    .about-me p{
+        padding: 0 30px 15px 30px;
+    }
+    .about-me a{
+        padding-left: 15px;
+    }
+}
+
+/* Desktop, large screens 720p*/
+@media(min-width: 1025px){
+    .about-me h1{
+        padding:20px;
+        font-size: 1.75rem;
+    }
+    .about-me h2{
+        padding:10px 30px 10px 30px;
+        font-size: 1.5rem;
+    }
+    .about-me p{
+        padding: 0 40px 20px 40px;
+    }
+    .about-me a{
+        padding-left: 20px;
+    }
+}
+
+/* Extra large screens, 1080p */
+@media(min-width: 1200px){
+    .about-me h1{
+        padding:25px;
+        font-size: 1.75rem;
+    }
+    .about-me h2{
+        padding:15px 35px 15px 35px;
+        font-size: 1.5rem;
+    }
+    .about-me p{
+        padding: 0 50px 25px 50px;
+    }
+    .about-me a{
+        padding-left: 25px;
+    }
+}
