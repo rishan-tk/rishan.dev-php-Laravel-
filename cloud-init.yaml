@@ -1,0 +1,33 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - nginx
+  - php
+  - php-fpm
+  - php-mysql
+  - php-curl
+  - php-mbstring
+  - php-xml
+  - php-bcmath
+  - php-zip
+  - php-cli
+  - unzip
+  - git
+  - curl
+  - mysql-server
+
+runcmd:
+  - curl -sS https://getcomposer.org/installer | php
+  - mv composer.phar /usr/local/bin/composer
+  - mkdir -p /var/www
+  - cd /var/www
+  - git clone https://github.com/rishan-tk/rishan.dev-php-Laravel- rishan.dev
+  - cd /var/www/rishan.dev
+  - composer install --no-dev --optimize-autoloader
+  - cp .env.example .env
+  - php artisan key:generate
+  - chown -R www-data:www-data /var/www/rishan.dev
+  - chmod -R 755 /var/www/rishan.dev
+  - systemctl enable nginx
+  - systemctl restart nginx
