@@ -3,31 +3,51 @@ package_update: true
 package_upgrade: true
 packages:
   - nginx
-  - php
-  - php-fpm
-  - php-mysql
-  - php-curl
-  - php-mbstring
-  - php-xml
-  - php-bcmath
-  - php-zip
-  - php-cli
+  - php8.3-cli
+  - php8.3-fpm
+  - php8.3-mysql
+  - php8.3-curl
+  - php8.3-mbstring
+  - php8.3-xml
+  - php8.3-bcmath
+  - php8.3-zip
   - unzip
   - git
   - curl
   - mysql-server
 
 runcmd:
+  # Explicitly set HOME to avoid Composer warnings
+  - export HOME=/root
+
+  # Properly install Composer globally
   - curl -sS https://getcomposer.org/installer | php
   - mv composer.phar /usr/local/bin/composer
+  - chmod +x /usr/local/bin/composer
+
+  # Verify Composer installation
+  - composer --version
+
+  # Clone Laravel project correctly
   - mkdir -p /var/www
-  - cd /var/www
-  - git clone https://github.com/rishan-tk/rishan.dev-php-Laravel- rishan.dev
+  - cd /var/www && git clone https://github.com/rishan-tk/rishan.dev-php-Laravel- rishan.dev
   - cd /var/www/rishan.dev
+
+  # Install Laravel PHP dependencies
   - composer install --no-dev --optimize-autoloader
+
+  # Laravel setup
   - cp .env.example .env
   - php artisan key:generate
+
+  # Set correct permissions
   - chown -R www-data:www-data /var/www/rishan.dev
   - chmod -R 755 /var/www/rishan.dev
+  - chmod -R 775 /var/www/rishan.dev/storage
+  - chmod -R 775 /var/www/rishan.dev/bootstrap/cache
+
+  # Enable & restart services
+  - systemctl enable php8.3-fpm
+  - systemctl restart php8.3-fpm
   - systemctl enable nginx
   - systemctl restart nginx
