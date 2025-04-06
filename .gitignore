@@ -32,6 +32,7 @@ yarn-error.log
 /storage/*.key
 .env
 .env.*.php
+.env.example
 Homestead.yaml
 Homestead.json
 npm-debug.log

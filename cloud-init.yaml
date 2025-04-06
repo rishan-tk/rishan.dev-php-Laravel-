@@ -1,53 +1,105 @@
 #cloud-config
-package_update: true
 package_upgrade: true
-packages:
-  - nginx
-  - php8.3-cli
-  - php8.3-fpm
-  - php8.3-mysql
-  - php8.3-curl
-  - php8.3-mbstring
-  - php8.3-xml
-  - php8.3-bcmath
-  - php8.3-zip
-  - unzip
-  - git
-  - curl
-  - mysql-server
+
+users:
+  - name: deploy
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICgqhrdForzPdecOUIpY2akf7LytxscIdkZ9XzDJ/1/n hetzner
 
 runcmd:
-  # Explicitly set HOME to avoid Composer warnings
-  - export HOME=/root
+  # 1) Update and upgrade
+  - apt-get update
+  - apt-get upgrade -y
 
-  # Properly install Composer globally
-  - curl -sS https://getcomposer.org/installer | php
-  - mv composer.phar /usr/local/bin/composer
-  - chmod +x /usr/local/bin/composer
+  # 2) Install needed packages
+  - apt-get install -y nginx php-fpm php-mbstring php-xml php-cli php-sqlite3 git curl unzip certbot python3-certbot-nginx
 
-  # Verify Composer installation
-  - composer --version
-
-  # Clone Laravel project correctly
+  # 3) Create /var/www and set ownership for deploy
   - mkdir -p /var/www
-  - cd /var/www && git clone https://github.com/rishan-tk/rishan.dev-php-Laravel- rishan.dev
-  - cd /var/www/rishan.dev
+  - chown deploy:deploy /var/www
 
-  # Install Laravel PHP dependencies
-  - composer install --no-dev --optimize-autoloader
+  # 4) Install Composer globally
+  - php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"
+  - sh -c "COMPOSER_HOME=/tmp php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
+  - chmod +x /usr/local/bin/composer
+  - chown deploy:deploy /usr/local/bin/composer
+  - rm /tmp/composer-setup.php
 
-  # Laravel setup
-  - cp .env.example .env
-  - php artisan key:generate
+  # 5) Clone your Laravel project into /var/www/laravel
+  - su - deploy -c "cd /var/www && git clone https://github.com/rishan-tk/rishan.dev-php-Laravel- laravel"
 
-  # Set correct permissions
-  - chown -R www-data:www-data /var/www/rishan.dev
-  - chmod -R 755 /var/www/rishan.dev
-  - chmod -R 775 /var/www/rishan.dev/storage
-  - chmod -R 775 /var/www/rishan.dev/bootstrap/cache
+  # 6) Create a fresh .env, etc...
+  - |
+    cat <<'EOF' > /var/www/laravel/.env
+    APP_NAME=Laravel
+    APP_ENV=production
+    APP_KEY=
+    APP_DEBUG=false
+    APP_URL=https://rishan.dev
 
-  # Enable & restart services
-  - systemctl enable php8.3-fpm
-  - systemctl restart php8.3-fpm
-  - systemctl enable nginx
+    LOG_CHANNEL=stack
+    DB_CONNECTION=sqlite
+    DB_DATABASE=/var/www/laravel/database/database.sqlite
+
+    # Additional env vars go here if needed
+    EOF
+  - chown deploy:deploy /var/www/laravel/.env
+
+  # 7) Create SQLite file
+  - su - deploy -c "mkdir -p /var/www/laravel/database && touch /var/www/laravel/database/database.sqlite"
+  # Fix SQLite permissions for the web server user (www-data)
+  - chown www-data:www-data /var/www/laravel/database/database.sqlite
+  - chmod 664 /var/www/laravel/database/database.sqlite
+  - chown www-data:www-data /var/www/laravel/database
+  - chmod 775 /var/www/laravel/database
+
+  # Install npm
+  - apt-get install -y npm
+
+  # Run npm install & build in /var/www/laravel
+  - su - deploy -c "cd /var/www/laravel && npm install && npm run build"
+
+  # 8) Install Laravel dependencies
+  - su - deploy -c "composer install --no-dev --optimize-autoloader --working-dir=/var/www/laravel"
+
+  # 9) Generate key, migrate, optimize
+  - su - deploy -c "cd /var/www/laravel && php artisan key:generate && php artisan migrate --force && php artisan optimize"
+
+  # 10) Configure Nginx
+  - rm -f /etc/nginx/sites-enabled/default
+  - |
+    cat <<'EOF' > /etc/nginx/sites-available/laravel
+    server {
+        listen 80;
+        server_name rishan.dev;
+
+        root /var/www/laravel/public;
+        index index.php index.html;
+
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+    EOF
+  - ln -s /etc/nginx/sites-available/laravel /etc/nginx/sites-enabled/laravel
+  - nginx -t
   - systemctl restart nginx
+  - systemctl restart php8.3-fpm
+
+  # 11) Certbot step
+  - certbot --nginx --agree-tos --redirect -m rishan-tk@rishan.dev -d rishan.dev --non-interactive
+
+  # 12) Reboot
+  - reboot
