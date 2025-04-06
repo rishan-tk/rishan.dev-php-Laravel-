@@ -1,7 +1,7 @@
 <?php
 namespace Deployer;
 
-require 'recipe/laravel.php';
+import('recipe/laravel.php');
 
 // Config
 set('application', 'rishan.dev');
