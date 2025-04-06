@@ -36,6 +36,7 @@ task('deploy:artisan:clear', [
     'artisan:route:clear'
 ]);
 
+// Optimise caches
 desc('Optimize Laravel');
 task('deploy:artisan:optimize', [
     'artisan:optimize',
