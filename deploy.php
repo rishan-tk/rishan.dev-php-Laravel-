@@ -40,17 +40,14 @@ desc('Optimize Laravel');
 task('deploy:artisan:optimize', [
     'artisan:optimize',
     'artisan:storage:link',
-    'artisan:migrate'
 ]);
 
 // Hooks
 after('deploy:vendors', 'npm:build');
-before('artisan:optimize', 'deploy:artisan:clear');// Clear all Laravel caches before optimization
-after('deploy:symlink', 'artisan:migrate');// Run migrations *before* optimizing (safe for SQLite)
-// Then optimize Laravel and fix SQLite perms
-after('artisan:migrate', 'deploy:artisan:optimize');
+before('artisan:optimize', 'deploy:artisan:clear');
+after('deploy:symlink', 'artisan:migrate');
 after('deploy:artisan:optimize', 'fix:sqlite');
-after('deploy:failed', 'deploy:unlock');// Standard failure handling
+after('deploy:failed', 'deploy:unlock');
 
 
 // Laravel specific settings
