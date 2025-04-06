@@ -19,4 +19,4 @@ jobs:
       uses: deployphp/action@v1
       with:
         private-key: ${{ secrets.HETZNER_DEPLOY_KEY }}
-        dep: deploy production
+        dep: deploy
