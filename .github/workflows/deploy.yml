@@ -5,6 +5,8 @@ on:
     branches:
       - main 
 
+concurrency: production_environment
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.8.1
+      uses: webfactory/ssh-agent@v0.9.1
       with:
         ssh-private-key: ${{ secrets.HETZNER_DEPLOY_KEY }}
 
