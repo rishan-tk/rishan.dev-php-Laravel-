@@ -26,6 +26,12 @@
     padding-right: 25px;
 }
 
+/* Dark mode sidebar */
+body.dark-mode #mobile-menu-button {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
 /* Mobile Nav 1700 931
 Mobile phones Samsung+ - Ultra*/
 @media(min-width: 275px){
