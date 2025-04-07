@@ -46,10 +46,8 @@
             function applyTheme(isDark) {
                 document.body.classList.toggle('dark-mode', isDark);
                 if (logoImg) logoImg.src = isDark ? darkLogo : lightLogo;
-                console.log(footerLogoImg);
                 if (footerLogoImg) footerLogoImg.src = isDark ? darkFooter : lightFooter;
                 if (bannerImg) bannerImg.src = isDark ? darkFooter : lightFooter;
-
 
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
             }
