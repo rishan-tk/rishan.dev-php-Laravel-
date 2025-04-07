@@ -3,6 +3,7 @@ namespace Deployer;
 
 import('recipe/laravel.php');
 
+
 // Config
 set('application', 'rishan.dev');
 set('repository', 'git@github.com:rishan-tk/rishan.dev-php-Laravel-.git');
