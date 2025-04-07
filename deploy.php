@@ -54,12 +54,11 @@ task('deploy:artisan:optimize', [
 ]);
 
 // Hooks
-after('deploy:vendors', 'npm:build');                         
-after('npm:build', 'deploy:artisan:clear');                    
-after('deploy:artisan:clear', 'deploy:artisan:optimize');     
-after('deploy:artisan:optimize', 'artisan:migrate');          
-after('artisan:migrate', 'deploy:symlink');                      
-after('deploy:failed', 'deploy:unlock');                       
+after('deploy:vendors', 'npm:build');
+after('npm:build', 'deploy:artisan:clear');
+after('deploy:artisan:clear', 'deploy:artisan:optimize');
+after('deploy:artisan:optimize', 'artisan:migrate');
+after('deploy:failed', 'deploy:unlock');
 
 
 // Laravel specific settings
