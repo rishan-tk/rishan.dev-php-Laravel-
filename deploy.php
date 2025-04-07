@@ -16,9 +16,6 @@ host('rishan.dev')
 
 // Tasks
 desc('Install frontend dependencies and build assets');
-task('debug:release_path', function () {
-    writeln('Release path: ' . get('release_path'));
-});
 task('npm:build', function () {
     within('{{release_path}}', function () {
         run('NODE_ENV=production npm ci --no-progress --silent');
