@@ -5,7 +5,7 @@
     <ul id="navbar" class="side-nav text-black">
         <li class="bold nav-logo">
             <div class="logo">
-                <img src="{{ asset('img/logo_black.png') }}" alt="Logo">
+                <img id="site-logo" src="{{ asset('img/logo_black.png') }}" alt="Logo">
             </div>
             <div class="text-center logo-caption">Rishan Thirukumar</div>
         </li>

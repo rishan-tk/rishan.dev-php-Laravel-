@@ -33,15 +33,35 @@
             const toggleBtn = document.getElementById('theme-toggle');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const savedTheme = localStorage.getItem('theme');
+            const logoImg = document.getElementById('site-logo');
+            const footerLogoImg = document.getElementById('ft-logo');
+            const bannerImg = document.getElementById('homepage-banner');
 
-            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                document.body.classList.add('dark-mode');
+            // Define image paths
+            const lightLogo = "{{ asset('img/logo_black.png') }}";
+            const darkLogo = "{{ asset('img/logo-ts-2.png') }}";
+            const lightFooter = "{{ asset('img/rishandev-logos_black.png') }}";
+            const darkFooter = "{{ asset('img/rishandev-logos_white2.png') }}";
+
+            function applyTheme(isDark) {
+                document.body.classList.toggle('dark-mode', isDark);
+                if (logoImg) logoImg.src = isDark ? darkLogo : lightLogo;
+                console.log(footerLogoImg);
+                if (footerLogoImg) footerLogoImg.src = isDark ? darkFooter : lightFooter;
+                if (bannerImg) bannerImg.src = isDark ? darkFooter : lightFooter;
+
+
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
             }
 
+            // Initial theme check
+            const useDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+            applyTheme(useDark);
+
+            // Toggle theme on button click
             toggleBtn?.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
                 const isDark = document.body.classList.contains('dark-mode');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme(!isDark); // Toggle
             });
         });
     </script>

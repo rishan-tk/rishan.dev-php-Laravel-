@@ -1,7 +1,7 @@
 <footer>
     <div class="container flex">
         <div id="footer-logo" class="container">
-            <img src="{{ asset('img/rishandev-logos_black.png') }}" alt="Footer Image">
+            <img id="ft-logo" src="{{ asset('img/rishandev-logos_black.png') }}" alt="Footer Image">
         </div>
         <div id="footer-links" class="container">
             <h2 class="text-center py-3">Useful Links</h2>
