@@ -1,8 +1,7 @@
 <?php
 namespace Deployer;
 
-require 'recipe/laravel.php';
-require 'contrib/npm.php';
+import('recipe/laravel.php');
 
 // Config
 set('application', 'rishan.dev');
@@ -17,9 +16,13 @@ host('rishan.dev')
 
 // Tasks
 desc('Install frontend dependencies and build assets');
-task('npm:ci:prod', function () {
+task('debug:release_path', function () {
+    writeln('Release path: ' . get('release_path'));
+});
+task('npm:build', function () {
     within('{{release_path}}', function () {
-        run('NODE_ENV=production {{bin/npm}} ci {{npm_flags}}');
+        run('NODE_ENV=production npm ci --no-progress --silent');
+        run('npm run build');
     });
 });
 
@@ -47,24 +50,11 @@ task('deploy:artisan:optimize', [
 ]);
 
 // Hooks
-// 1. Clear Laravel caches early
-before('artisan:optimize', 'deploy:artisan:clear');
-
-// 2. Run database migrations after clearing caches (before symlink)
-after('deploy:artisan:clear', 'artisan:migrate');
-
-// 3. Build frontend assets after installing vendors
 after('deploy:vendors', 'npm:build');
-
-// 4. Fix SQLite file + dir permissions after optimization
+before('artisan:optimize', 'deploy:artisan:clear');
+after('deploy:symlink', 'artisan:migrate');
 after('deploy:artisan:optimize', 'fix:sqlite');
-
-// 5. Unlock deploy if it fails
 after('deploy:failed', 'deploy:unlock');
-
-// Optional: enable maintenance mode during symlink switch
-before('deploy:symlink', 'artisan:down');
-after('deploy:symlink', 'artisan:up');
 
 
 // Laravel specific settings
