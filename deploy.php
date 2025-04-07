@@ -24,12 +24,14 @@ task('npm:build', function () {
     });
 });
 
+// Run once if needed
 desc('Create and fix permissions for SQLite DB');
 task('fix:sqlite', function () {
     run('mkdir -p {{deploy_path}}/shared/database');
-    run('touch {{deploy_path}}/shared/database/database.sqlite');
-    run('sudo chown www-data:www-data {{deploy_path}}/shared/database/database.sqlite');
-    run('sudo chmod 664 {{deploy_path}}/shared/database/database.sqlite');
+    run('if [ ! -f {{deploy_path}}/shared/database/database.sqlite ]; then touch {{deploy_path}}/shared/database/database.sqlite; fi');
+    run('chmod 664 {{deploy_path}}/shared/database/database.sqlite');
+    run('chmod 775 {{deploy_path}}/shared/database');
+    run('chown -R www-data:www-data {{deploy_path}}/shared/database');
 });
 
 desc('Clear Laravel caches (excludes app cache)');
@@ -53,8 +55,7 @@ task('deploy:artisan:optimize', [
 
 // Hooks
 after('deploy:vendors', 'npm:build');                         
-after('npm:build', 'fix:sqlite');                   
-after('fix:sqlite', 'deploy:artisan:clear'); 
+after('npm:build', 'deploy:artisan:clear');                    
 after('deploy:artisan:clear', 'deploy:artisan:optimize');     
 after('deploy:artisan:optimize', 'artisan:migrate');          
 after('artisan:migrate', 'deploy:symlink');                      
