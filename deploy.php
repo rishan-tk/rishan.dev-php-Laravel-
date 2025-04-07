@@ -23,8 +23,10 @@ task('npm:build', function () {
     });
 });
 
-desc('Fix SQLite permissions');
+desc('Create and fix permissions for SQLite DB');
 task('fix:sqlite', function () {
+    run('mkdir -p {{release_path}}/database');
+    run('touch {{release_path}}/database/database.sqlite');
     run('sudo chown www-data:www-data {{release_path}}/database/database.sqlite');
     run('sudo chmod 664 {{release_path}}/database/database.sqlite');
     run('sudo chown www-data:www-data {{release_path}}/database');
