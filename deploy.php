@@ -48,7 +48,7 @@ task('deploy:artisan:optimize', [
 
 // Hooks
 after('deploy:vendors', 'npm:build');
-before('artisan:optimize', 'deploy:artisan:clear');
+before('deploy:artisan:optimize', 'deploy:artisan:clear');
 after('deploy:symlink', 'artisan:migrate');
 after('deploy:artisan:optimize', 'fix:sqlite');
 after('deploy:failed', 'deploy:unlock');
