@@ -8,6 +8,7 @@ set('application', 'rishan.dev');
 set('repository', 'git@github.com:rishan-tk/rishan.dev-php-Laravel-.git');
 set('git_tty', true);
 set('keep_releases', 3);
+add('shared_files', ['database/database.sqlite']);
 
 // Hosts
 host('rishan.dev')
@@ -25,12 +26,10 @@ task('npm:build', function () {
 
 desc('Create and fix permissions for SQLite DB');
 task('fix:sqlite', function () {
-    run('mkdir -p {{release_path}}/database');
-    run('touch {{release_path}}/database/database.sqlite');
-    run('sudo chown www-data:www-data {{release_path}}/database/database.sqlite');
-    run('sudo chmod 664 {{release_path}}/database/database.sqlite');
-    run('sudo chown www-data:www-data {{release_path}}/database');
-    run('sudo chmod 775 {{release_path}}/database');
+    run('mkdir -p {{deploy_path}}/shared/database');
+    run('touch {{deploy_path}}/shared/database/database.sqlite');
+    run('sudo chown www-data:www-data {{deploy_path}}/shared/database/database.sqlite');
+    run('sudo chmod 664 {{deploy_path}}/shared/database/database.sqlite');
 });
 
 desc('Clear Laravel caches');
