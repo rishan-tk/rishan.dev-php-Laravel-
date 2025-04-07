@@ -32,13 +32,17 @@ task('fix:sqlite', function () {
     run('sudo chmod 664 {{deploy_path}}/shared/database/database.sqlite');
 });
 
-desc('Clear Laravel caches');
+desc('Clear Laravel caches (excludes app cache)');
 task('deploy:artisan:clear', [
-    'artisan:cache:clear',
     'artisan:config:clear',
     'artisan:view:clear',
     'artisan:route:clear'
 ]);
+
+desc('Clear full application cache (optional)');
+task('artisan:cache:clear', function () {
+    run('{{bin/php}} {{release_path}}/artisan cache:clear');
+});
 
 // Optimise caches
 desc('Optimize Laravel');
