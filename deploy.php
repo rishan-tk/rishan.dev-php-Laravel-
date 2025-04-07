@@ -21,7 +21,7 @@ task('debug:release_path', function () {
 });
 task('npm:build', function () {
     within('{{release_path}}', function () {
-        run('npm ci');
+        run('NODE_ENV=production npm ci');
         run('npm run build');
     });
 });
