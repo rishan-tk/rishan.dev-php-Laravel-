@@ -20,9 +20,10 @@ task('debug:release_path', function () {
     writeln('Release path: ' . get('release_path'));
 });
 task('npm:build', function () {
-    run('cd {{release_path}}');
-    run('npm ci');
-    run('npm run build');
+    within('{{release_path}}', function () {
+        run('npm ci');
+        run('npm run build');
+    });
 });
 
 desc('Fix SQLite permissions');
