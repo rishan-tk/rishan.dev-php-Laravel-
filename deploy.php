@@ -47,7 +47,7 @@ task('artisan:cache:clear', function () {
     run('{{bin/php}} {{release_path}}/artisan cache:clear');
 });
 
-// Optimise caches
+// Optimise Laravel caches
 desc('Optimize Laravel');
 task('deploy:artisan:optimize', [
     'artisan:optimize',
