@@ -47,11 +47,12 @@ task('deploy:artisan:optimize', [
 ]);
 
 // Hooks
-after('deploy:vendors', 'npm:build');
-before('deploy:artisan:optimize', 'deploy:artisan:clear');
-after('deploy:symlink', 'artisan:migrate');
-after('deploy:artisan:optimize', 'fix:sqlite');
-after('deploy:failed', 'deploy:unlock');
+after('deploy:vendors', 'npm:build');                  // Build frontend assets
+after('deploy:symlink', 'deploy:artisan:clear');       // Clear Laravel caches after new release is live
+after('deploy:artisan:clear', 'artisan:migrate');      // Run DB migrations
+after('artisan:migrate', 'deploy:artisan:optimize');   // Optimize Laravel (config, routes, views)
+after('deploy:artisan:optimize', 'fix:sqlite');        // Fix permissions
+after('deploy:failed', 'deploy:unlock');   
 
 
 // Laravel specific settings
