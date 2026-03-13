@@ -5,9 +5,9 @@
     <title>@yield('title', 'Rishan’s Portfolio')</title>
     <meta name="description" content="@yield('meta_description', 'Welcome to my portfolio')">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="//unpkg.com/alpinejs" defer></script>
-    @vite('resources/css/app.css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="//unpkg.com/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="root-div">
     @include('components.navbar')
