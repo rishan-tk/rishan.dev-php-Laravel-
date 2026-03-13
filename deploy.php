@@ -12,7 +12,8 @@ set('keep_releases', 3);
 add('shared_files', ['database/database.sqlite']);
 
 // Hosts
-host('rishan.dev')
+host('production')
+    ->set('hostname', '82.29.53.130')
     ->set('remote_user', 'deploy')
     ->set('deploy_path', '/var/www/laravel');
 
