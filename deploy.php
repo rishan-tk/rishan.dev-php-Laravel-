@@ -6,7 +6,7 @@ import('recipe/laravel.php');
 
 // Config
 set('application', 'rishan.dev');
-set('repository', 'git@github.com:rishan-tk/rishan.dev-php-Laravel-.git');
+set('repository', 'https://github.com/rishan-tk/rishan.dev-php-Laravel-.git');
 set('git_tty', false);
 set('keep_releases', 3);
 add('shared_files', ['database/database.sqlite']);
