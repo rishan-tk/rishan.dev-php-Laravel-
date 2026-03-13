@@ -22,7 +22,7 @@ host('production')
 desc('Install frontend dependencies and build assets');
 task('npm:build', function () {
     within('{{release_path}}', function () {
-        run('NODE_ENV=production npm install --no-progress');
+        run('npm install --no-progress');
         run('npm run build');
     });
 });
