@@ -17,6 +17,7 @@ host('production')
     ->set('remote_user', 'deploy')
     ->set('deploy_path', '/var/www/laravel');
 
+
 // Tasks
 desc('Install frontend dependencies and build assets');
 task('npm:build', function () {
