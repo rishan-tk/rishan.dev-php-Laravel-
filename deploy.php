@@ -22,8 +22,8 @@ host('production')
 desc('Install frontend dependencies and build assets');
 task('npm:build', function () {
     within('{{release_path}}', function () {
-        run('NODE_ENV=production npm ci --no-progress --silent');
-        run('npm run build');
+        run('NODE_ENV=production npm ci --no-progress');
+        run('npx vite build');
     });
 });
 
