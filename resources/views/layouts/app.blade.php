@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#0d1117">
 
     {{-- Favicon --}}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6">
 
     {{-- Prevent flash of wrong theme --}}
     <script>

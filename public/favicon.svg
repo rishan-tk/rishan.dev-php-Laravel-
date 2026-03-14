@@ -8,92 +8,200 @@
   <circle cx="50" cy="50" r="48" fill="#141922"/>
 
   <g clip-path="url(#c)">
-    <!-- Shadow layer -->
-    <rect x="22" y="17" width="10" height="5" fill="#166534"/>
-    <rect x="22" y="22" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="27" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="32" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="37" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="42" width="10" height="5" fill="#166534"/>
-    <rect x="22" y="47" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="52" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="57" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="62" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="67" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="72" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="77" width="5" height="5" fill="#166534"/>
-    <rect x="22" y="82" width="5" height="5" fill="#166534"/>
-    <rect x="27" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="32" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="37" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="42" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="47" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="52" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="57" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="17" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="22" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="27" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="32" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="37" width="5" height="5" fill="#166534"/>
-    <rect x="27" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="32" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="37" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="42" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="47" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="52" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="57" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="42" width="5" height="5" fill="#166534"/>
-    <rect x="47" y="47" width="5" height="5" fill="#166534"/>
-    <rect x="52" y="52" width="5" height="5" fill="#166534"/>
-    <rect x="57" y="57" width="5" height="5" fill="#166534"/>
-    <rect x="62" y="62" width="5" height="5" fill="#166534"/>
-    <rect x="67" y="67" width="5" height="5" fill="#166534"/>
-    <rect x="67" y="72" width="5" height="5" fill="#166534"/>
-    <rect x="67" y="77" width="5" height="5" fill="#166534"/>
-    <rect x="67" y="82" width="5" height="5" fill="#166534"/>
+    <!--
+      Pixel grid: cell=5, gap=1, step=6
+      Canvas 100x100, R is 8 cols x 13 rows = 47w x 77h
+      Left margin: (100-47)/2 = 26.5 -> x0=27
+      Top margin:  (100-77)/2 = 11.5 -> y0=12
 
-    <!-- Bright layer - pixel grid R -->
-    <rect x="19" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="19" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="24" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="29" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="34" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="44" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="49" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="54" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="59" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="64" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="69" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="74" width="5" height="5" fill="#4ade80"/>
-    <rect x="19" y="79" width="5" height="5" fill="#4ade80"/>
-    <rect x="24" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="29" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="34" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="39" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="44" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="49" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="54" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="14" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="19" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="24" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="29" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="34" width="5" height="5" fill="#4ade80"/>
-    <rect x="24" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="29" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="34" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="39" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="44" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="49" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="54" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="39" width="5" height="5" fill="#4ade80"/>
-    <rect x="44" y="44" width="5" height="5" fill="#4ade80"/>
-    <rect x="49" y="49" width="5" height="5" fill="#4ade80"/>
-    <rect x="54" y="54" width="5" height="5" fill="#4ade80"/>
-    <rect x="59" y="59" width="5" height="5" fill="#4ade80"/>
-    <rect x="64" y="64" width="5" height="5" fill="#4ade80"/>
-    <rect x="64" y="69" width="5" height="5" fill="#4ade80"/>
-    <rect x="64" y="74" width="5" height="5" fill="#4ade80"/>
-    <rect x="64" y="79" width="5" height="5" fill="#4ade80"/>
+      R pixel map (# = filled, . = empty/hole):
+      Col:    0 1 2 3 4 5 6 7
+      Row  0: # # # # # # # #   top bar
+      Row  1: # # # # # # # #
+      Row  2: # # . . . . # #   bump sides + hole
+      Row  3: # # . . . . # #
+      Row  4: # # . . . . # #
+      Row  5: # # # # # # # #   middle bar
+      Row  6: # # # # # # # #
+      Row  7: # # # # # # . .   leg: col 4-5 break right
+      Row  8: # # . . # # # .
+      Row  9: # # . . . # # #
+      Row 10: # # . . . . # #
+      Row 11: # # . . . . # #
+      Row 12: # # . . . . # #
+
+      Shadow: same map, +3,+3 offset, #166534
+      Bright: #4ade80, at x0=27, y0=12, step=6
+    -->
+
+    <!-- BRIGHT LAYER -->
+    <!-- Row 0: all 8 cols -->
+    <rect x="27" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="39" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="45" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="51" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="57" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="12" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="12" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 1: all 8 cols -->
+    <rect x="27" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="39" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="45" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="51" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="57" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="18" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="18" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 2: cols 0,1,6,7 only (hole at 2-5) -->
+    <rect x="27" y="24" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="24" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="24" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="24" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 3: cols 0,1,6,7 -->
+    <rect x="27" y="30" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="30" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="30" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="30" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 4: cols 0,1,6,7 -->
+    <rect x="27" y="36" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="36" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="36" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="36" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 5: all 8 cols (middle bar) -->
+    <rect x="27" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="39" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="45" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="51" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="57" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="42" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="42" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 6: all 8 cols -->
+    <rect x="27" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="39" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="45" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="51" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="57" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="48" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="48" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 7: cols 0,1,4,5,6 (leg branches right from col 4) -->
+    <rect x="27" y="54" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="54" width="5" height="5" fill="#4ade80"/>
+    <rect x="51" y="54" width="5" height="5" fill="#4ade80"/>
+    <rect x="57" y="54" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="54" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 8: cols 0,1, then 5,6,7 -->
+    <rect x="27" y="60" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="60" width="5" height="5" fill="#4ade80"/>
+    <rect x="57" y="60" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="60" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="60" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 9: cols 0,1, then 6,7 -->
+    <rect x="27" y="66" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="66" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="66" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="66" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 10: cols 0,1, then 6,7 -->
+    <rect x="27" y="72" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="72" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="72" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="72" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 11: cols 0,1,6,7 -->
+    <rect x="27" y="78" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="78" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="78" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="78" width="5" height="5" fill="#4ade80"/>
+    <!-- Row 12: cols 0,1,6,7 -->
+    <rect x="27" y="84" width="5" height="5" fill="#4ade80"/>
+    <rect x="33" y="84" width="5" height="5" fill="#4ade80"/>
+    <rect x="63" y="84" width="5" height="5" fill="#4ade80"/>
+    <rect x="69" y="84" width="5" height="5" fill="#4ade80"/>
+
+    <!-- SHADOW LAYER (+3,+3) -->
+    <!-- Row 0 -->
+    <rect x="30" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="42" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="48" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="54" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="60" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="15" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="15" width="5" height="5" fill="#166534"/>
+    <!-- Row 1 -->
+    <rect x="30" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="42" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="48" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="54" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="60" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="21" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="21" width="5" height="5" fill="#166534"/>
+    <!-- Row 2 -->
+    <rect x="30" y="27" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="27" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="27" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="27" width="5" height="5" fill="#166534"/>
+    <!-- Row 3 -->
+    <rect x="30" y="33" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="33" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="33" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="33" width="5" height="5" fill="#166534"/>
+    <!-- Row 4 -->
+    <rect x="30" y="39" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="39" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="39" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="39" width="5" height="5" fill="#166534"/>
+    <!-- Row 5 -->
+    <rect x="30" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="42" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="48" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="54" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="60" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="45" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="45" width="5" height="5" fill="#166534"/>
+    <!-- Row 6 -->
+    <rect x="30" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="42" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="48" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="54" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="60" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="51" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="51" width="5" height="5" fill="#166534"/>
+    <!-- Row 7 -->
+    <rect x="30" y="57" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="57" width="5" height="5" fill="#166534"/>
+    <rect x="54" y="57" width="5" height="5" fill="#166534"/>
+    <rect x="60" y="57" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="57" width="5" height="5" fill="#166534"/>
+    <!-- Row 8 -->
+    <rect x="30" y="63" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="63" width="5" height="5" fill="#166534"/>
+    <rect x="60" y="63" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="63" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="63" width="5" height="5" fill="#166534"/>
+    <!-- Row 9 -->
+    <rect x="30" y="69" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="69" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="69" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="69" width="5" height="5" fill="#166534"/>
+    <!-- Row 10 -->
+    <rect x="30" y="75" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="75" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="75" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="75" width="5" height="5" fill="#166534"/>
+    <!-- Row 11 -->
+    <rect x="30" y="81" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="81" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="81" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="81" width="5" height="5" fill="#166534"/>
+    <!-- Row 12 -->
+    <rect x="30" y="87" width="5" height="5" fill="#166534"/>
+    <rect x="36" y="87" width="5" height="5" fill="#166534"/>
+    <rect x="66" y="87" width="5" height="5" fill="#166534"/>
+    <rect x="72" y="87" width="5" height="5" fill="#166534"/>
   </g>
 </svg>

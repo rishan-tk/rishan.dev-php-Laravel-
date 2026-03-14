@@ -130,13 +130,13 @@
   transition: transform var(--transition-normal), opacity var(--transition-fast);
 }
 
-.hamburger-line:nth-child(1) { top: 8px; }
-.hamburger-line:nth-child(2) { top: 15px; }
-.hamburger-line:nth-child(3) { top: 22px; }
+.hamburger-line:nth-child(1) { top: 5px; }
+.hamburger-line:nth-child(2) { top: 13px; }
+.hamburger-line:nth-child(3) { top: 21px; }
 
 /* Hamburger -> X animation */
 .hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(8px) rotate(45deg);
 }
 
 .hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
@@ -144,7 +144,7 @@
 }
 
 .hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 @media (max-width: 767px) {
