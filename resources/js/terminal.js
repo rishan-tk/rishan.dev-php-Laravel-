@@ -132,7 +132,7 @@ export default function terminal() {
         case 'whoami':    return this.cmdWhoami();
         case 'fastfetch': return this.cmdFastfetch();
         case 'neofetch':  return this.cmdNeofetch();
-        case 'matrix':    return this.cmdMatrix();
+        case 'matrix':    return this.cmdMatrix(args);
         case 'history':   return this.cmdHistory2();
         case 'boot':      return this.cmdBoot(args);
         case 'theme':     return this.cmdTheme(args);
@@ -156,7 +156,9 @@ export default function terminal() {
   <span class="t-cyan">whoami</span>            Display identity
   <span class="t-cyan">fastfetch</span>         System information (full)
   <span class="t-cyan">neofetch</span>          System information (classic)
-  <span class="t-cyan">matrix</span>            Enter the Matrix
+  <span class="t-cyan">matrix</span>            Enter the Matrix (default 5s)
+  <span class="t-cyan">matrix -t</span> <span class="t-muted">&lt;secs&gt;</span>   Run for specified seconds
+  <span class="t-cyan">matrix --unlim</span>    Run until any key pressed
   <span class="t-cyan">history</span>           Show command history
   <span class="t-cyan">boot --enable</span>     Enable boot sequence on next visit
   <span class="t-cyan">boot --disable</span>    Disable boot sequence
@@ -317,8 +319,26 @@ export default function terminal() {
     },
 
     // ── matrix ───────────────────────────────────────────────────────────────
-    cmdMatrix() {
-      this.push('<span class="t-green">Initializing matrix protocol...</span>');
+    cmdMatrix(args) {
+      const unlimited = args.includes('--unlim');
+      let duration = 5000;
+
+      const tIdx = args.indexOf('-t');
+      if (tIdx !== -1) {
+        const val = parseInt(args[tIdx + 1], 10);
+        if (!val || val <= 0 || !Number.isInteger(val)) {
+          return this.push('<span class="t-red">matrix: -t requires a positive integer (seconds). E.g. matrix -t 10</span>');
+        }
+        duration = val * 1000;
+      }
+
+      if (unlimited) {
+        this.push('<span class="t-green">Initializing matrix protocol... <span class="t-muted">(press any key to exit)</span></span>');
+      } else {
+        const secs = duration / 1000;
+        this.push(`<span class="t-green">Initializing matrix protocol... <span class="t-muted">(${secs}s)</span></span>`);
+      }
+
       const canvas = document.createElement('canvas');
       canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:#000;opacity:0;transition:opacity 0.3s';
       document.body.appendChild(canvas);
@@ -344,15 +364,24 @@ export default function terminal() {
         });
       }, 50);
 
-      setTimeout(() => {
+      const stop = () => {
         clearInterval(interval);
+        document.removeEventListener('keydown', onKey);
         canvas.style.opacity = '0';
         setTimeout(() => {
           canvas.remove();
           this.push('<span class="t-green">Matrix protocol terminated. Welcome back.</span>');
           this.focusInput();
         }, 300);
-      }, 5000);
+      };
+
+      const onKey = () => stop();
+
+      if (unlimited) {
+        document.addEventListener('keydown', onKey, { once: true });
+      } else {
+        setTimeout(stop, duration);
+      }
     },
 
     // ── history ───────────────────────────────────────────────────────────────
