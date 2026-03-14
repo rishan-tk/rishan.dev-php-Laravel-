@@ -40,10 +40,10 @@
     <p class="mobile-subtitle">Computer Science Graduate &amp; Software Developer</p>
     <p class="mobile-tagline">I build things for the web and beyond.</p>
     <nav class="mobile-nav-commands">
-        <a href="/projects"  class="command-link">$ cd projects/</a>
-        <a href="/skills"    class="command-link">$ cd skills/</a>
-        <a href="/aboutme"   class="command-link">$ cd aboutme/</a>
-        <a href="/contactme" class="command-link">$ cd contactme/</a>
+        <a href="/projects"  class="command-link">$ curl projects/</a>
+        <a href="/skills"    class="command-link">$ curl skills/</a>
+        <a href="/aboutme"   class="command-link">$ curl aboutme/</a>
+        <a href="/contactme" class="command-link">$ curl contactme/</a>
     </nav>
 </div>
 @endsection
