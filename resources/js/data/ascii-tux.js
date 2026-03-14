@@ -226,4 +226,4 @@ const LARGE_2 = [
 
 export const TIER_SMALL  = [SMALL_1, SMALL_2, SMALL_3];
 export const TIER_MEDIUM = [MEDIUM_1, MEDIUM_2, LINUX_LOGO];
-export const TIER_LARGE  = [LARGE_1, LARGE_2, LINUX_LOGO];
+export const TIER_LARGE  = [LARGE_1, LARGE_2];
