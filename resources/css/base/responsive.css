@@ -33,13 +33,6 @@
   }
 }
 
-/* Full-height with dvh fallback */
-.terminal-shell,
-.terminal-page {
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-
 /* Desktop terminal hidden on mobile, mobile fallback shown */
 @media (max-width: 767px) {
   .desktop-only {
