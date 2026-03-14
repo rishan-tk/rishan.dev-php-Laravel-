@@ -104,15 +104,65 @@ export default function terminal() {
       this.input = this.cmdHistory[this.cmdIndex];
     },
 
+    // Available pages for curl tab completion
+    _curlPages: ['projects', 'skills', 'aboutme', 'contactme', 'blog'],
+
     tabComplete() {
       if (!this.input.trim()) return;
       const parts = this.input.split(/\s+/);
-      const partial = parts[parts.length - 1];
-      const node = this.getNode(this.cwd === '~' ? '/' : this.cwd.replace('~/', '/'));
-      if (!node) return;
-      const matches = node.filter(n => n.name.startsWith(partial));
+      const cmd = parts[0]?.toLowerCase();
+      const partial = parts[parts.length - 1] || '';
+
+      // Curl tab completion: complete page names from anywhere
+      if (cmd === 'curl' && parts.length >= 2) {
+        const clean = partial.replace(/^\//, '');
+        if (!clean) {
+          this.push(this._curlPages.map(p => `<span class="t-cyan">${p}</span>`).join('  '));
+          return;
+        }
+        const matches = this._curlPages.filter(p => p.startsWith(clean));
+        if (matches.length === 1) {
+          parts[parts.length - 1] = matches[0];
+          this.input = parts.join(' ');
+        } else if (matches.length > 1) {
+          this.push(matches.map(p => `<span class="t-cyan">${p}</span>`).join('  '));
+        }
+        return;
+      }
+
+      // Filesystem tab completion
+      if (!partial) return;
+
+      // Handle paths with slashes (e.g. "cat projects/R")
+      const lastSlash = partial.lastIndexOf('/');
+      let dirPath, namePrefix;
+      if (lastSlash !== -1) {
+        dirPath = partial.substring(0, lastSlash) || '/';
+        namePrefix = partial.substring(lastSlash + 1);
+      } else {
+        dirPath = null;
+        namePrefix = partial;
+      }
+
+      const resolvedDir = dirPath
+        ? this.resolvePath(dirPath)
+        : this.cwd;
+      const children = this.getChildren(resolvedDir);
+      if (!children) return;
+
+      if (!namePrefix) {
+        this.push(children.map(n => `<span class="t-cyan">${n.name}</span>`).join('  '));
+        return;
+      }
+
+      const matches = children.filter(n => n.name.startsWith(namePrefix));
       if (matches.length === 1) {
-        parts[parts.length - 1] = matches[0].name + (matches[0].type === 'dir' ? '/' : '');
+        const completed = matches[0].name + (matches[0].type === 'dir' ? '/' : '');
+        if (lastSlash !== -1) {
+          parts[parts.length - 1] = partial.substring(0, lastSlash + 1) + completed;
+        } else {
+          parts[parts.length - 1] = completed;
+        }
         this.input = parts.join(' ');
       } else if (matches.length > 1) {
         this.push(matches.map(m => `<span class="t-cyan">${m.name}</span>`).join('  '));
@@ -182,7 +232,7 @@ export default function terminal() {
         return this.push(`<span class="t-white">${this.escHtml(node.name)}</span>`);
       }
 
-      const children = Array.isArray(node) ? node : node.children || [];
+      const children = node.children || [];
       if (children.length === 0) {
         return this.push('<span class="t-muted">total 0</span>');
       }
@@ -233,19 +283,6 @@ export default function terminal() {
       }
 
       this.cwd = resolved;
-
-      // Navigate to the matching page route
-      const routeMap = {
-        '~/projects':  '/projects',
-        '~/skills':    '/skills',
-        '~/aboutme':   '/aboutme',
-        '~/contactme': '/contactme',
-        '~/blog':      '/blog',
-      };
-      if (routeMap[this.cwd]) {
-        this.push(`<span class="t-muted">Navigating to ${routeMap[this.cwd]}...</span>`);
-        setTimeout(() => { window.location.href = routeMap[this.cwd]; }, 400);
-      }
     },
 
     // ── cat ──────────────────────────────────────────────────────────────────
@@ -355,7 +392,11 @@ export default function terminal() {
     },
 
     // ── matrix ───────────────────────────────────────────────────────────────
+    _matrixRunning: false,
     cmdMatrix(args) {
+      if (this._matrixRunning) {
+        return this.push('<span class="t-muted">Matrix is already running.</span>');
+      }
       const unlimited = args.includes('--unlim');
       let duration = 5000;
 
@@ -378,6 +419,7 @@ export default function terminal() {
       const canvas = document.createElement('canvas');
       canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:#000;opacity:0;transition:opacity 0.3s';
       document.body.appendChild(canvas);
+      this._matrixRunning = true;
       requestAnimationFrame(() => { canvas.style.opacity = '1'; });
 
       const ctx = canvas.getContext('2d');
@@ -401,6 +443,7 @@ export default function terminal() {
       }, 50);
 
       const stop = () => {
+        this._matrixRunning = false;
         clearInterval(interval);
         document.removeEventListener('keydown', onKey);
         canvas.style.opacity = '0';
@@ -475,18 +518,27 @@ export default function terminal() {
     getNode(path) {
       if (!this.fs) return null;
       const clean = path.replace(/^~\/?/, '').replace(/^\//, '');
-      if (!clean) return this.fs;
+      if (!clean) return { type: 'dir', name: '~', children: this.fs };
 
       const parts = clean.split('/').filter(Boolean);
-      let node = this.fs;
+      let children = this.fs;
+      let found = null;
       for (const part of parts) {
-        const found = Array.isArray(node)
-          ? node.find(n => n.name === part)
-          : node.children?.find(n => n.name === part);
+        found = Array.isArray(children)
+          ? children.find(n => n.name === part)
+          : null;
         if (!found) return null;
-        node = found.type === 'dir' ? found.children : found;
+        children = found.children || [];
       }
-      return node;
+      return found;
+    },
+
+    getChildren(path) {
+      const node = this.getNode(path);
+      if (!node) return null;
+      if (Array.isArray(node.children)) return node.children;
+      if (node.type === 'dir' && Array.isArray(this.fs) && node.name === '~') return this.fs;
+      return null;
     },
 
     async fetchIp() {

@@ -23,6 +23,10 @@ class TerminalController extends Controller
 
     public function file(string $path)
     {
+        if (str_contains($path, "\0") || ! str_ends_with($path, '.md')) {
+            abort(404, 'File not found');
+        }
+
         $base = resource_path('data/terminal');
         $full = realpath($base . '/' . $path);
 
