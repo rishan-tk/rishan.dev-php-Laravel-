@@ -1,9 +1,10 @@
 import { marked } from 'marked';
 import { runBoot, isBootEnabled } from './boot.js';
 
-// ─── Tux ASCII art variants ───────────────────────────────────────────────────
-// Small  (~10 cols) — shown on narrow viewports
-const TUX_SMALL = [
+// ─── Tux ASCII art — multiple variants per size tier ─────────────────────────
+
+// ── Small tier (< 640px) ─────────────────────────────────────────────────────
+const SMALL_1 = [
   '    .--.    ',
   '   |o_o |   ',
   '   |:_/ |   ',
@@ -13,66 +14,175 @@ const TUX_SMALL = [
   '\\___)=(___/',
 ];
 
-// Medium (~22 cols) — default, shown on mid-size viewports
-const TUX_MEDIUM = [
+const SMALL_2 = [
+  '      .-.     ',
+  '      oo|     ',
+  "     /`'\\    ",
+  '     (\\_;/)  ',
+];
+
+const SMALL_3 = [
+  '     _._      ',
+  '    /_ _`.    ',
+  '    (.X.)|    ',
+  "    |\\_/'|   ",
+  '    )____`\\  ',
+  '   //_V _\\ \\',
+  '  ((  |  `(_))',
+  '  / \\> \'  / \\',
+  '  \\  \\.__./  /',
+  "  `-'    `-'  ",
+];
+
+// ── Medium tier (640–1199px) ─────────────────────────────────────────────────
+const MEDIUM_1 = [
   '              a8888b.       ',
   '             d888888b.      ',
-  "             8P\"YP\"Y88     ",
+  '             8P"YP"Y88      ',
   '             8|o||o|88      ',
   "             8'    .88      ",
   "             8`._.' Y8.     ",
   '            d/      `8b.    ',
-  '           dP   .    Y8b.   ',
-  "          d8:'  \"  `::88b  ",
-  "         d8\"         'Y88b  ",
-  ":8P    '      :888       ",
-  "         8a.   :     _a88P  ",
-  '       ._/\"Yaa_:   .| 88P| ',
-  "  jgs  \\    YP\"    `| 8P ` ",
-  "  a:f  /     \\.___.d|    .' ",
-  "       `--..__)8888P`._.'   ",
+  '          .dP   .     Y8b.  ',
+  '         d8:\'   "   `::88b.',
+  '        d8"           `Y88b ',
+  '       :8P     \'       :888 ',
+  '        8a.    :      _a88P ',
+  '      ._/"Yaa_ :    .| 88P| ',
+  '      \\    YP"      `| 8P `.  ',
+  '      /     \\._____d|    .\'  ',
+  '      `--..__)888888P`._.\' ',
 ];
 
-// Large (~46 cols) — shown on wide viewports (> 1200px)
-const TUX_LARGE = [
-  '                 .88888888:.             ',
-  '                88888888.88888.          ',
-  '              .8888888888888888.         ',
-  '              888888888888888888         ',
-  "              88' _`88'_  `88888        ",
-  '              88 88 88 88  88888         ',
-  '              88_88_::_88_:88888         ',
-  '              88:::,::,:::::8888         ',
-  "              88`:::::::::'`8888         ",
-  "             .88  `::::'    8:88.        ",
-  '            8888            `8:888.      ',
-  "          .8888'             `888888.    ",
-  "         .8888:..  .::.  ...:'8888888:. ",
-  "        .8888.'     :'     `'::`88:88888",
-  "       .8888        '         `.888:8888.",
-  '      888:8         .           888:88888',
-  '    .888:88        .:           888:88888:',
-  '    8888888.       ::           88:888888 ',
-  "    `.::.888.      ::          .88888888  ",
-  '   .::::::.888.    ::         :::`8888`.:.',
-  '  ::::::::::.888   \'         .:::::::::::: ',
-  '  ::::::::::::.8    \'      .:8::::::::::::.',
+const MEDIUM_2 = [
+  '           _..._         ',
+  "         .'     '.       ",
+  '        /  _   _  \\      ',
+  '        | (o)_(o) |      ',
+  '         \\(     ) /      ',
+  "         //'._.'\\  \\    ",
+  '        //   .   \\ \\    ',
+  '       ||   .     \\ \\   ',
+  '       |\\   :     / |   ',
+  '       \\ `) \'   (`  /_  ',
+  '     _)``".____,.\'"`  (_',
+  '      )     )\'--\'(     ( ',
+  "      '---`      `---`  ",
+];
+
+const MEDIUM_3 = [
+  '           ___           ',
+  '          /\\/\\\\         ',
+  '          L..J |         ',
+  '          |\\_/ |        ',
+  '          |____ \\       ',
+  '         // V  \\ \\     ',
+  '        |_| |   |_|     ',
+  '       /  \\ \'   /  \\  ',
+  '       \\   \\___/   /   ',
+  '        \\__/   \\__/    ',
+];
+
+// ── Large tier (≥ 1200px) ────────────────────────────────────────────────────
+const LARGE_1 = [
+  '                 .88888888:.                ',
+  '                88888888.88888.             ',
+  '              .8888888888888888.            ',
+  '              888888888888888888            ',
+  "              88' _`88'_  `88888           ",
+  '              88 88 88 88  88888            ',
+  '              88_88_::_88_:88888            ',
+  '              88:::,::,:::::8888            ',
+  "              88`:::::::::'`8888            ",
+  "             .88  `::::'    8:88.           ",
+  '            8888            `8:888.         ',
+  "          .8888'             `888888.       ",
+  "         .8888:..  .::.  ...:'8888888:.    ",
+  "        .8888.'     :'     `'::`88:88888   ",
+  "       .8888        '         `.888:8888.  ",
+  '      888:8         .           888:88888  ',
+  '    .888:88        .:           888:88888: ',
+  '    8888888.       ::           88:888888  ',
+  "    `.::.888.      ::          .88888888   ",
+  "   .::::::.888.    ::         :::`8888`.:.  ",
+  "  ::::::::::.888   '         .:::::::::::: ",
+  "  ::::::::::::.8    '      .:8::::::::::::.",
   ' .::::::::::::::.        .:888:::::::::::::',
-  ' :::::::::::::::88:.__..:88888:::::::::::\'  ',
-  "  `'.:::::::::::88888888888.88::::::::::' ",
-  "miK     `':::_:' -- '' -'-' `':_::::'\`  ",
+  " :::::::::::::::88:.__..:88888:::::::::::'  ",
+  "  `'.:::::::::::88888888888.88::::::::::'  ",
+  "       `':::_:' -- '' -'-' `':_::::'`     ",
 ];
 
-// Pick art based on viewport width
-function getTuxVariant() {
-  const w = window.innerWidth;
-  if (w < 640)  return TUX_SMALL;
-  if (w < 1200) return TUX_MEDIUM;
-  return TUX_LARGE;
-}
+const LARGE_2 = [
+  '                         4MMMMMMMMMMMML            ',
+  '                       4MMMMMMMMMMMMMMMML          ',
+  '                      MMMMMMMMMMMMMMMMMMML         ',
+  '                     4MMMMMMMMMMMMMMMMMMMMM        ',
+  '                    4MMMMMMMMMMMMMMMMMMMMMML       ',
+  '                    MMMMP   MMMMMM   MMMMMMM      ',
+  '                    MMMM MM  MMM  MM  MMMMMM      ',
+  '                    MMMM MM  MMM  MM  MMMMML      ',
+  '                     MMM MP,,,,,,,MM  MMMMMM      ',
+  '                      MM,"          "MMMMMMP      ',
+  "                      MMw           'MMMMMM       ",
+  '                      MM"w         w MMMMMMML     ',
+  '                      MM" w       w " MMMoMMML    ',
+  '                     MMM " wwwwwww "  MMMMMMML    ',
+  '                   MMMP   ".,,,,,,"     MMMMMMMML ',
+  '                  MMMP                    MMMMMMMML',
+  '                MMMMM                      MMMMMMMML',
+  "              MMMMM,,-''             ''-,,MMMMMMMMML",
+  '             MMMMM                          MMMMMMMMML',
+  '            MMMMM                            MMMMMMMMML',
+  '           MMMMM                             MMMMMMMMMM',
+  '           MMMM                               MMMMMMMMMM',
+  '          MMMMM                               MMMMMMMMMML',
+  '         MMMMM                                MMMMMMMMMMM',
+  '         MMMMMM                               MMMMMMMMMMM',
+  '         """"MMMM                             MMMMMMMMMMP ',
+  '        "     ""MMM                            MMMMMMMMP  ',
+];
 
-// Cycling variants for animation (small→medium→large→medium loop or same-size swap)
-const TUX_CYCLE = [TUX_SMALL, TUX_MEDIUM, TUX_LARGE];
+const LARGE_3 = [
+  '                         ooMMMMMMMooo              ',
+  '                       oMMMMMMMMMMMMMMMoo          ',
+  '                      MMMMMMMMMMMMMMo"MMMo         ',
+  '                     "MMMMMMMMMMMMMMMMMMMMM        ',
+  '                     MMMMMMMMMMMMMMMMMMMMMMo       ',
+  '                     MMMM""MMMMMM"o" MMMMMMM      ',
+  '                     MMo o" MMM"  oo ""MMMMM       ',
+  '                     MM MMo MMM" MMoM "MMMMM       ',
+  '                     MMo"M"o" "" MMM" oMMMMM"      ',
+  '                     oMM M  o" " o "o MMMMMM"      ',
+  '                     oM"o " o "  o "o MMMMMMM      ',
+  '                     oMMoM o " M M "o MMMM"MMo     ',
+  '                      Mo " M "M "o" o  MMMoMMMo    ',
+  '                     MMo " "" M "       MMMMMMMo   ',
+  '                   oMM"   "o o "         MMMMMMMM  ',
+  '                  MMM"                    MMMMMMMMo ',
+  '                oMMMo                     "MMMMMMMMo',
+  '               MMMMM o             "  " o" "MMMMMMMMMo',
+  '              MMMMM          "            " "MMMMMMMMMo',
+  '             oMMMM                          ""MMMMMMMMMo',
+  '            oMMMM         o         o         MMoMMMMMMM',
+  '            MMMM               o              "MMMMMMMMMM',
+  '           MMMM"     o    o             o     "MMMMMMMMMMo',
+  '         oMMMMM                                MMMMMMMMMMo',
+  '         MMM"MM                               "MMM"MMMMMMM',
+  '         MMMMMM           "      o   "         MMMMMMMMMMM',
+];
+
+// ── Tier selection ───────────────────────────────────────────────────────────
+const TIER_SMALL  = [SMALL_1, SMALL_2, SMALL_3];
+const TIER_MEDIUM = [MEDIUM_1, MEDIUM_2, MEDIUM_3];
+const TIER_LARGE  = [LARGE_1, LARGE_2, LARGE_3];
+
+function getTier() {
+  const w = window.innerWidth;
+  if (w < 640)  return TIER_SMALL;
+  if (w < 1200) return TIER_MEDIUM;
+  return TIER_LARGE;
+}
 
 // ─── RISHAN.DEV ASCII art ─────────────────────────────────────────────────────
 const RISHAN_ASCII = `<div class="terminal-ascii"><span class="t-green t-bold">  ██████╗ ██╗███████╗██╗  ██╗ █████╗ ███╗   ██╗   ██████╗ ███████╗██╗   ██╗
@@ -423,7 +533,7 @@ export default function terminal() {
         `<span class="t-cyan">Time:</span>        <span class="t-white">${now.toLocaleTimeString()}</span>`,
         `<span class="t-cyan">Theme:</span>       <span class="t-white">${document.documentElement.dataset.theme || 'dark'}</span>`,
       ];
-      this.push(this.buildFetch(infoLines));
+      this.push(this.buildFetch(infoLines, true));
     },
 
     // ── neofetch ──────────────────────────────────────────────────────────────
@@ -439,15 +549,15 @@ export default function terminal() {
         `<span class="t-cyan">CPU:</span>    <span class="t-white">${navigator.hardwareConcurrency || '?'}-core</span>`,
         `<span class="t-cyan">Memory:</span> <span class="t-white">${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'unknown'}</span>`,
       ];
-      this.push(this.buildFetch(infoLines));
+      this.push(this.buildFetch(infoLines, false));
     },
 
-    buildFetch(infoLines) {
-      // Kill any previous cycling interval
+    buildFetch(infoLines, animate) {
       clearInterval(this._fetchInterval);
       this._fetchInterval = null;
 
-      const tuxLines = getTuxVariant();
+      const tier = getTier();
+      const tuxLines = tier[0];
       const id = `fetch-ascii-${Date.now()}`;
       const rows = Math.max(tuxLines.length, infoLines.length);
 
@@ -462,32 +572,36 @@ export default function terminal() {
       }
       html += '</div></div>';
 
-      // Start cycling after render (skip if user prefers reduced motion)
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reducedMotion) this.$nextTick(() => {
-        let cycleIdx = TUX_CYCLE.indexOf(tuxLines);
-        if (cycleIdx === -1) cycleIdx = 0;
+      if (animate) {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reducedMotion) this.$nextTick(() => {
+          let cycleIdx = 0;
+          let prevTier = tier;
 
-        this._fetchInterval = setInterval(() => {
-          const pre = document.getElementById(id);
-          if (!pre) {
-            clearInterval(this._fetchInterval);
-            this._fetchInterval = null;
-            return;
-          }
-          // Fade out, swap art, fade in
-          pre.style.opacity = '0';
-          setTimeout(() => {
-            // On resize, pick the right size; otherwise cycle forward
-            const sized = getTuxVariant();
-            cycleIdx = (cycleIdx + 1) % TUX_CYCLE.length;
-            const target = TUX_CYCLE.indexOf(sized);
-            const show = TUX_CYCLE[Math.abs((target + (cycleIdx % 2 === 0 ? 0 : 1)) % TUX_CYCLE.length)];
-            pre.textContent = show.join('\n');
-            pre.style.opacity = '1';
-          }, 280);
-        }, 1200);
-      });
+          this._fetchInterval = setInterval(() => {
+            const pre = document.getElementById(id);
+            if (!pre) {
+              clearInterval(this._fetchInterval);
+              this._fetchInterval = null;
+              return;
+            }
+
+            const currentTier = getTier();
+            if (currentTier !== prevTier) {
+              cycleIdx = 0;
+              prevTier = currentTier;
+            } else {
+              cycleIdx = (cycleIdx + 1) % currentTier.length;
+            }
+
+            pre.style.opacity = '0';
+            setTimeout(() => {
+              pre.textContent = currentTier[cycleIdx].join('\n');
+              pre.style.opacity = '1';
+            }, 280);
+          }, 2400);
+        });
+      }
 
       return html;
     },
