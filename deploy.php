@@ -5,7 +5,6 @@ import('recipe/laravel.php');
 
 
 // Config
-set('branch', 'rehaul');
 set('application', 'rishan.dev');
 set('repository', 'https://github.com/rishan-tk/rishan.dev-php-Laravel-.git');
 set('branch', 'rehaul');
