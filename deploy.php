@@ -8,6 +8,7 @@ import('recipe/laravel.php');
 set('branch', 'rehaul');
 set('application', 'rishan.dev');
 set('repository', 'https://github.com/rishan-tk/rishan.dev-php-Laravel-.git');
+set('branch', 'rehaul');
 set('git_tty', false);
 set('keep_releases', 3);
 add('shared_files', ['database/database.sqlite']);
