@@ -1,9 +1,2 @@
-.homepage-banner {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.homepage-banner > img {
-    width: 100%;
-}
+/* Homepage -- terminal on desktop, mobile fallback
+   Actual terminal styles are in components/terminal.css */

@@ -1,39 +1,37 @@
 @extends('layouts.app')
 
-@section('title', 'About Me')
-@section('meta_description', 'Learn more about Rishan – background, interests, and experience.')
+@section('title', 'About Me — Rishan Thirukumar')
+@section('meta_description', 'Computer Science Graduate & Software Developer — background, interests, and experience.')
 
 @section('content')
-<div class="heading">
-    <h1>ABOUT ME</h1>
-    @include('components.mobile-menu-button')
-</div>
+    <h1 class="fade-in">~/aboutme</h1>
 
-<div class="main-content about-me">
-    <p>Welcome to my portfolio! I'm Rishan, a Computer Science graduate with a strong passion for technology, mathematics, and creative problem-solving...</p>
+    <div class="about-layout" style="margin-top: var(--space-lg);">
+        <div class="about-text fade-in">
+            <h2>My Journey</h2>
+            <p>I'm Rishan, a Computer Science graduate with a strong passion for technology, mathematics, and creative problem-solving. My degree at the University of East Anglia gave me a solid foundation across software engineering, algorithms, systems design, and GPU programming.</p>
 
-    <h1>My Journey</h1>
-    <p>My academic pursuit at the University of East Anglia...</p>
+            <h2>What I Build</h2>
+            <p>I enjoy building things across the stack — from server-hardened production deployments and Laravel backends, to interactive front-ends and low-level graphics pipelines. I like understanding how things work at every layer.</p>
 
-    <h1>Interests and Achievements</h1>
-    <p>Beyond the screen, I am a musician at heart...</p>
+            <h2>Interests &amp; Achievements</h2>
+            <p>Beyond software, I'm a musician. I play multiple instruments and find that music and coding share the same creative discipline — structure, precision, and a lot of iteration.</p>
+            <p>Fascinated by Unreal Engine, game physics, GPU compute, and whatever else is interesting in tech at any given moment.</p>
 
-    <h1>Educational Highlights</h1>
-    <h2>University:</h2>
-    <p>University of East Anglia</p>
+            <h2>Let's Connect</h2>
+            <p>Find me via the <a href="/contactme">contact page</a> or directly at <a href="mailto:rishan-tk@rishan.dev">rishan-tk@rishan.dev</a>.</p>
+        </div>
 
-    <h2>Degree:</h2>
-    <p>BSc Computer Science</p>
-
-    <h2>Notable Projects:</h2>
-    <p>GPU-accelerated rendering of smoke using CUDA and shader pipelines...</p>
-
-    <h1>A Glimpse into the Future</h1>
-    <p>Fascinated by Unreal Engine, game physics, and quantum computing...</p>
-
-    <h1>Let's Connect</h1>
-    <p>Contact me via the Contact Me page or directly at <a href="mailto:rishan-tk@rishan.dev">rishan-tk@rishan.dev</a>.</p>
-
-    <p>Thank you for visiting my portfolio!</p>
-</div>
+        <div class="about-info-card fade-in">
+            <pre class="t-white t-bold" style="font-family: var(--font-mono);">rishan@dev</pre>
+            <pre class="t-muted" style="font-family: var(--font-mono);">-----------</pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">Name:</span>     Rishan Thirukumar</pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">Degree:</span>   BSc Computer Science</pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">Uni:</span>      University of East Anglia</pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">Location:</span> United Kingdom</pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">Email:</span>    rishan-tk@rishan.dev</pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">GitHub:</span>   <a href="https://github.com/rishan-tk" target="_blank" rel="noopener">rishan-tk</a></pre>
+            <pre style="font-family: var(--font-mono);"><span class="t-cyan">Uptime:</span>   since Dec 2023</pre>
+        </div>
+    </div>
 @endsection

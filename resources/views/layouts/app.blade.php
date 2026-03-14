@@ -2,67 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Rishan’s Portfolio')</title>
-    <meta name="description" content="@yield('meta_description', 'Welcome to my portfolio')">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="//unpkg.com/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="root-div">
-    @include('components.navbar')
+    <title>@yield('title', 'Rishan Thirukumar — Portfolio')</title>
+    <meta name="description" content="@yield('meta_description', 'Computer Science Graduate & Software Developer — terminal-themed portfolio')">
+    <meta name="author" content="Rishan Thirukumar">
+    <meta name="theme-color" content="#0d1117">
 
-    <div class="container content">
-        @yield('content')
-        {{-- Back to top button --}}
-        <button x-data="{ visible: false }" x-show="visible"
-                x-init="
-                    window.addEventListener('scroll', () => {
-                        visible = window.scrollY > 300;
-                    })
-                "
-                x-transition @click="window.scrollTo({ top: 0, behavior: 'smooth' })" class="back-to-top" aria-label="Back to top">
-            <i class="fa-solid fa-arrow-up"></i>
-        </button>
-    </div>
-
-    @include('components.footer')
-
+    {{-- Prevent flash of wrong theme --}}
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleBtn = document.getElementById('theme-toggle');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const savedTheme = localStorage.getItem('theme');
-            const logoImg = document.getElementById('site-logo');
-            const footerLogoImg = document.getElementById('ft-logo');
-            const bannerImg = document.getElementById('homepage-banner');
-
-            // Define image paths
-            const lightLogo = "{{ asset('img/logo_black.png') }}";
-            const darkLogo = "{{ asset('img/logo-ts-2.png') }}";
-            const lightFooter = "{{ asset('img/rishandev-logos_black.png') }}";
-            const darkFooter = "{{ asset('img/rishandev-logos_white2.png') }}";
-
-            function applyTheme(isDark) {
-                document.body.classList.toggle('dark-mode', isDark);
-                if (logoImg) logoImg.src = isDark ? darkLogo : lightLogo;
-                if (footerLogoImg) footerLogoImg.src = isDark ? darkFooter : lightFooter;
-                if (bannerImg) bannerImg.src = isDark ? darkFooter : lightFooter;
-
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            }
-
-            // Initial theme check
-            const useDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-            applyTheme(useDark);
-
-            // Toggle theme on button click
-            toggleBtn?.addEventListener('click', () => {
-                const isDark = document.body.classList.contains('dark-mode');
-                applyTheme(!isDark); // Toggle
-            });
-        });
+      (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.dataset.theme=t})();
     </script>
+
+    {{-- Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    {{-- Devicon for skill icons --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/devicon.min.css">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('head')
+</head>
+<body x-data="{ theme: localStorage.getItem('theme') || 'dark', mobileMenu: false }"
+      x-init="$watch('theme', val => { document.documentElement.dataset.theme = val; localStorage.setItem('theme', val) })"
+      @toggle-theme.window="theme = theme === 'dark' ? 'light' : 'dark'"
+      :data-theme="theme">
+
+    @hasSection('raw')
+        {{-- Homepage terminal uses its own full-screen layout --}}
+        @yield('raw')
+    @else
+        <x-terminal-frame :path="request()->path()">
+            @yield('content')
+        </x-terminal-frame>
+    @endif
 
 </body>
 </html>

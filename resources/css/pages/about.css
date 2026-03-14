@@ -1,104 +1,50 @@
-.about-me h1 {
-    font-weight: bold;
-}
-.about-me h2 {
-    padding: 10px 25px;
-}
-.about-me p {
-    padding: 10px 25px;
-}
-.about-me a {
-    padding-left: 10px;
-}
-/* Mobile Nav 1700 931
-Mobile phones Samsung+ - Ultra*/
-@media(min-width: 275px){
-    .about-me h1{
-        padding:10px;
-        font-size: 1.5rem;
-    }
-    .about-me h2{
-        padding:5px 15px 5px 15px;
-        font-size: 1.25rem;
-    }
-    .about-me p{
-        padding: 0 20px 10px 20px;
-    }
-    .about-me a{
-        padding-left: 10px;
-    }
+/* ============================================================
+   About Page -- two-column layout with neofetch-style info card
+   ============================================================ */
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  max-width: var(--max-content-width);
+  margin-inline: auto;
 }
 
-/* iPads, tablets */
-@media(min-width: 481px){
-    .about-me h1{
-        padding:15px;
-        font-size: 1.75rem;
-    }
-    .about-me h2{
-        padding:5px 20px 5px 20px;
-        font-size: 1.5rem;
-    }
-    .about-me p{
-        padding: 0 25px 10px 25px;
-    }
-    .about-me a{
-        padding-left: 10px;
-    }
+@media (min-width: 768px) {
+  .about-layout {
+    grid-template-columns: 65fr 35fr;
+  }
 }
 
-
-/* Desktop Nav 
-Small screens, laptops */
-@media(min-width: 769px){
-    .about-me h1{
-        padding:20px;
-        font-size: 1.75rem;
-    }
-    .about-me h2{
-        padding:10px 25px 10px 25px;
-        font-size: 1.5rem;
-    }
-    .about-me p{
-        padding: 0 30px 15px 30px;
-    }
-    .about-me a{
-        padding-left: 15px;
-    }
+.about-text h2 {
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
 }
 
-/* Desktop, large screens 720p*/
-@media(min-width: 1025px){
-    .about-me h1{
-        padding:20px;
-        font-size: 1.75rem;
-    }
-    .about-me h2{
-        padding:10px 30px 10px 30px;
-        font-size: 1.5rem;
-    }
-    .about-me p{
-        padding: 0 40px 20px 40px;
-    }
-    .about-me a{
-        padding-left: 20px;
-    }
+.about-text h2:first-child {
+  margin-top: 0;
 }
 
-/* Extra large screens, 1080p */
-@media(min-width: 1200px){
-    .about-me h1{
-        padding:25px;
-        font-size: 1.75rem;
-    }
-    .about-me h2{
-        padding:15px 35px 15px 35px;
-        font-size: 1.5rem;
-    }
-    .about-me p{
-        padding: 0 50px 25px 50px;
-    }
-    .about-me a{
-        padding-left: 25px;
-    }
+.about-text p {
+  margin-bottom: var(--space-md);
+  max-width: 65ch;
 }
+
+/* neofetch-style info card */
+.about-info-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--space-md);
+  font-size: var(--text-sm);
+  align-self: start;
+}
+
+.about-info-card pre {
+  margin: 0;
+  padding: 2px 0;
+  white-space: pre-wrap;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+

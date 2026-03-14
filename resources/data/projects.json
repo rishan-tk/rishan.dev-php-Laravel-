@@ -1,0 +1,142 @@
+[
+  {
+    "slug": "personal-website",
+    "title": "Personal Portfolio Website",
+    "description": "Terminal-themed portfolio built with Laravel 12, Alpine.js, and Tailwind CSS v4. Features an interactive Linux terminal on the homepage.",
+    "category": "personal",
+    "tags": ["Laravel", "PHP", "Alpine.js", "Tailwind CSS", "Vite"],
+    "github": "https://github.com/rishan-tk/rishan.dev",
+    "live": "https://rishan.dev",
+    "featured": true,
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "text", "content": "This portfolio site is built from scratch as a terminal-themed interactive experience. The homepage is a fully functional Linux terminal where visitors can run commands to explore the portfolio." },
+      { "type": "heading", "text": "Features" },
+      { "type": "list", "items": [
+        "Interactive Linux terminal with real commands (ls, cd, cat, fastfetch, matrix, whoami)",
+        "Virtual filesystem backed by Markdown files in resources/data/terminal/",
+        "Dark theme (default) and Solarized Light theme, persisted in localStorage",
+        "Fluid responsive design using clamp() — no breakpoint jumps",
+        "GitHub Actions CI/CD with zero-downtime deployment via Deployer",
+        "Server hardened with Cloudflare Authenticated Origin Pulls and custom UFW rules"
+      ]},
+      { "type": "heading", "text": "Stack" },
+      { "type": "text", "content": "Laravel 12, PHP 8.3, Alpine.js 3.x, Tailwind CSS v4, Vite 6, marked.js. Deployed on Ubuntu 24 behind Cloudflare with Nginx + PHP-FPM." }
+    ]
+  },
+  {
+    "slug": "discord-bot",
+    "title": "Discord Music Bot",
+    "description": "Automated Discord bot providing music playback, queue management, and utility commands via discord.py and yt-dlp.",
+    "category": "personal",
+    "tags": ["Python", "discord.py", "yt-dlp", "FFmpeg"],
+    "github": null,
+    "featured": true,
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "text", "content": "An automated Discord bot providing music playback, queue management, and utility commands for server members." },
+      { "type": "heading", "text": "Features" },
+      { "type": "list", "items": [
+        "Stream audio from YouTube directly into voice channels",
+        "Queue system: add, skip, pause, resume, shuffle",
+        "Search by song name or URL",
+        "Volume control and loop mode",
+        "Slash command support"
+      ]},
+      { "type": "heading", "text": "Technical Notes" },
+      { "type": "text", "content": "Built using discord.py with async/await throughout. Audio is streamed via yt-dlp + FFmpeg — no local file storage needed. Runs on a home server." }
+    ]
+  },
+  {
+    "slug": "signal-bot",
+    "title": "Signal E-Commerce Bot",
+    "description": "Automated e-commerce shop bot on the Signal messaging platform with product browsing, ordering, and payment flows.",
+    "category": "personal",
+    "tags": ["Python", "Signal API", "REST APIs"],
+    "github": null,
+    "featured": true,
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "text", "content": "An automated e-commerce shop bot built on the Signal messaging platform, enabling product browsing, ordering, and payment flows directly within Signal chats." },
+      { "type": "heading", "text": "Features" },
+      { "type": "list", "items": [
+        "Product catalogue browsing via chat commands",
+        "Order creation and management",
+        "Payment flow integration",
+        "Admin inventory updates",
+        "Order status notifications"
+      ]},
+      { "type": "heading", "text": "Why Signal?" },
+      { "type": "text", "content": "Signal's end-to-end encryption made it an interesting platform for private commerce. The project was a technical challenge to build a full e-commerce flow within the constraints of a messaging API." }
+    ]
+  },
+  {
+    "slug": "movie-database",
+    "title": "Movie Database",
+    "description": "Full-stack web application for browsing, searching, and reviewing films. Built as an academic project at UEA.",
+    "category": "academic",
+    "tags": ["PHP", "MySQL", "HTML5", "CSS3", "JavaScript"],
+    "github": null,
+    "featured": false,
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "text", "content": "A full-stack web application for browsing, searching, and reviewing films. Built as an academic project at the University of East Anglia." },
+      { "type": "heading", "text": "Features" },
+      { "type": "list", "items": [
+        "Search by title, genre, or year",
+        "User ratings and reviews",
+        "Detailed movie pages with cast and synopsis",
+        "User accounts with watchlist",
+        "Responsive design"
+      ]},
+      { "type": "heading", "text": "Academic Context" },
+      { "type": "text", "content": "Built for the Web Technologies module. Graded on database design, code quality, and UI/UX." }
+    ]
+  },
+  {
+    "slug": "platformer",
+    "title": "2D Platformer — Graphics Module",
+    "description": "2D platformer game with a custom OpenGL rendering pipeline, GLSL shaders, and physics — built for the Graphics 1 module at UEA.",
+    "category": "academic",
+    "tags": ["C++", "OpenGL", "GLSL", "Qt"],
+    "github": null,
+    "featured": false,
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "text", "content": "A 2D platformer game built using OpenGL for GPU-accelerated rendering as part of the Graphics 1 module at UEA." },
+      { "type": "heading", "text": "Features" },
+      { "type": "list", "items": [
+        "Custom GLSL sprite rendering pipeline",
+        "Tile-based level system",
+        "Physics: gravity, collision detection, jump mechanics",
+        "Animated sprites with sprite sheet support",
+        "Parallax scrolling backgrounds"
+      ]},
+      { "type": "heading", "text": "Technical Highlights" },
+      { "type": "text", "content": "Rendering pipeline built from scratch — no game engine. Sprites rendered as textured quads via a custom VAO/VBO setup. Collision uses AABB detection. Achieved distinction." }
+    ]
+  },
+  {
+    "slug": "landlord-system",
+    "title": "Landlord Management System",
+    "description": "Work-in-progress property management platform for landlords and tenants with maintenance requests and rent tracking.",
+    "category": "wip",
+    "tags": ["Laravel", "Alpine.js", "Tailwind CSS", "MySQL"],
+    "github": null,
+    "featured": false,
+    "blocks": [
+      { "type": "heading", "text": "Overview" },
+      { "type": "text", "content": "A property management platform designed to streamline landlord-tenant relationships, maintenance requests, and rent tracking. Currently in development." },
+      { "type": "heading", "text": "Planned Features" },
+      { "type": "list", "items": [
+        "Property and unit management",
+        "Tenant portal with lease viewing and maintenance requests",
+        "Rent payment tracking and reminders",
+        "Document storage for lease agreements",
+        "Landlord dashboard with occupancy overview"
+      ]},
+      { "type": "heading", "text": "Current Progress" },
+      { "type": "text", "content": "Database schema complete. Laravel authentication and property CRUD implemented. Tenant management in progress. Multi-tenancy with Laravel Policies." }
+    ]
+  }
+]

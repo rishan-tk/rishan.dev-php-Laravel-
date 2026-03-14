@@ -1,43 +1,112 @@
-.contact-form > div,
-.contact-form form {
-    padding: 10px;
+/* ============================================================
+   Form Styles -- Contact form with terminal aesthetic
+   ============================================================ */
+
+.form-group {
+  margin-bottom: var(--space-md);
 }
-.contact-form form > div {
-    padding: 10px;
+
+.form-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-green);
+  margin-bottom: var(--space-xs);
 }
-.contact-form .form-group {
-    margin-bottom: 15px;
+
+.form-label::before {
+  content: '> ';
+  color: var(--text-muted);
 }
-.contact-form label {
-    display: block;
-    margin-bottom: 5px;
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
 }
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form textarea {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--text-green);
+  box-shadow: var(--glow-green);
 }
-.contact-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
 }
-.contact-form button:hover {
-    background-color: #45a049;
+
+/* Honeypot field */
+.form-hp {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
 }
-.error-message {
-    color: red;
-    margin-top: 10px;
+
+.form-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--bg-primary);
+  background: var(--text-green);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
-.success-message {
-    color: #45a049;
-    margin-top: 10px;
+
+.form-btn:hover {
+  background: var(--text-green-bright);
+  box-shadow: var(--glow-green);
+}
+
+.form-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: var(--text-red);
+  font-size: var(--text-sm);
+  margin-top: var(--space-xs);
+}
+
+.form-success {
+  color: var(--text-green);
+  font-size: var(--text-sm);
+  margin-top: var(--space-xs);
+}
+
+.form-alert {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-md);
+}
+
+.form-alert--error {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid var(--text-red);
+  color: var(--text-red);
+}
+
+.form-alert--success {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid var(--text-green);
+  color: var(--text-green);
 }

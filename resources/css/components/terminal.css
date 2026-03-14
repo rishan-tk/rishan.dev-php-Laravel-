@@ -1,0 +1,143 @@
+/* ============================================================
+   Interactive Terminal (Homepage)
+   ============================================================ */
+
+.terminal-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-terminal);
+  color: var(--text-green);
+  padding: var(--space-sm);
+  overflow: hidden;
+  cursor: text;
+}
+
+.terminal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-terminal);
+  color: var(--text-green);
+  padding: var(--space-sm);
+  overflow-y: auto;
+}
+
+.terminal-output {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.terminal-prompt {
+  color: var(--text-cyan);
+  flex-shrink: 0;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-green);
+  font-family: inherit;
+  font-size: inherit;
+  flex: 1;
+  caret-color: var(--text-green);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.2em;
+  background: var(--text-green);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Mobile fallback */
+.mobile-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  min-height: 80dvh;
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.mobile-home h1 {
+  font-size: var(--text-hero);
+  margin-bottom: var(--space-sm);
+}
+
+.mobile-subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.mobile-tagline {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.mobile-nav-commands {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 300px;
+}
+
+.command-link {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--text-green);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 4px;
+  text-align: left;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.command-link:hover {
+  border-color: var(--border-green);
+  box-shadow: var(--glow-green);
+  color: var(--text-green-bright);
+}
+
+/* Rendered markdown inside terminal */
+.terminal-md {
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.terminal-md h1, .terminal-md h2, .terminal-md h3 {
+  color: var(--text-amber);
+  margin-top: 1em;
+  margin-bottom: 0.25em;
+}
+
+.terminal-md p { color: var(--text-primary); margin-bottom: 0.5em; }
+.terminal-md a { color: var(--text-cyan); }
+.terminal-md code { color: var(--text-cyan); }
+.terminal-md ul, .terminal-md ol { padding-left: 1.5em; color: var(--text-primary); }
+.terminal-md strong { color: var(--text-green); font-weight: 700; }

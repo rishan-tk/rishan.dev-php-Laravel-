@@ -1,75 +1,52 @@
 @extends('layouts.app')
 
-@section('title', 'Projects')
-@section('meta_description', 'Explore projects Rishan has worked on — personal, academic, and in progress.')
+@section('title', 'Projects — Rishan Thirukumar')
+@section('meta_description', 'Personal, academic, and work-in-progress projects by Rishan Thirukumar.')
 
 @section('content')
-    <div class="heading">
-        <h1>PROJECTS</h1>
-        @include('components.mobile-menu-button')
-    </div>
+    @php
+        $projects = json_decode(file_get_contents(resource_path('data/projects.json')), true);
+        $categories = [
+            'personal'  => 'Personal Projects',
+            'academic'  => 'Academic Projects',
+            'wip'       => 'Work in Progress',
+        ];
+    @endphp
 
-    <div class="main-content" x-data="projectToc()">
-        <div id="tableOfContents" class="mb-6">
-            <h2>Contents:</h2>
-            <ul>
-                <template x-for="(mainItem, mainIndex) in items" :key="mainIndex">
-                    <li>
-                        <button @click="toggleExpand(mainItem)" class="flex items-center gap-1">
-                            <i :class="mainItem.isOpen ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
-                            <span x-text="mainItem.title"></span>
-                        </button>
-                        <ul x-show="mainItem.isOpen" x-transition>
-                            <template x-for="(subItem, subIndex) in mainItem.subItems" :key="subIndex">
-                                <li>
-                                    <button @click="toggleExpand(subItem)" class="flex items-center gap-1">
-                                        <i :class="subItem.isOpen ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
-                                        <span x-text="subItem.title"></span>
-                                    </button>
-                                    <ul x-show="subItem.isOpen" x-transition>
-                                        <template x-for="(project, projectIndex) in subItem.subItems" :key="projectIndex">
-                                            <li>
-                                                <button @click="toggleExpand(project)" class="flex items-center gap-1">
-                                                    <i :class="project.isOpen ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
-                                                    <span x-text="project.title"></span>
-                                                </button>
-                                                <ul x-show="project.isOpen" x-transition>
-                                                    <template x-for="(link, linkIndex) in project.links" :key="linkIndex">
-                                                        <li>
-                                                            <a :href="link.href" x-text="link.name"></a>
-                                                        </li>
-                                                    </template>
-                                                </ul>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                </li>
-                            </template>
-                        </ul>
-                    </li>
-                </template>
-            </ul>
-        </div>
+    <h1 class="fade-in">~/projects</h1>
+    <p class="t-muted fade-in" style="margin-bottom: var(--space-lg);">Personal, academic, and work-in-progress projects.</p>
 
-        <div class="page-intro" id="projects-intro">
-            <p>
-                Below I will be briefly talking about some of the projects I have worked on during my time.
-                If you would like to read more, there will be a link to a separate page for each project soon.
-            </p>
-        </div>
-
-        {{-- Load the full project content --}}
-        @include('pages.projects.content')
-    </div>
-
-    <script>
-        function projectToc() {
-            return {
-                items: {!! file_get_contents(resource_path('data/projects_toc.json')) !!},
-                toggleExpand(item) {
-                    item.isOpen = !item.isOpen;
-                }
-            }
-        }
-    </script>
+    @foreach ($categories as $key => $label)
+        @php $filtered = collect($projects)->where('category', $key)->values(); @endphp
+        @if ($filtered->isNotEmpty())
+            <section style="margin-bottom: var(--space-xl);">
+                <h2 class="fade-in" style="margin-bottom: var(--space-md);">{{ $label }}</h2>
+                <div class="card-grid">
+                    @foreach ($filtered as $project)
+                        <a href="/projects/{{ $project['slug'] }}" class="card fade-in" style="text-decoration: none;">
+                            <div class="card-title">{{ $project['title'] }}</div>
+                            <p class="card-desc">{{ $project['description'] }}</p>
+                            <div class="card-tags">
+                                @foreach ($project['tags'] as $tag)
+                                    <span class="card-tag">{{ $tag }}</span>
+                                @endforeach
+                            </div>
+                            <div class="card-footer" style="margin-top: var(--space-sm);">
+                                @if (!empty($project['live']))
+                                    <span class="t-green" style="font-family: var(--font-mono); font-size: var(--text-xs);">● live</span>
+                                @elseif ($project['category'] === 'wip')
+                                    <span class="t-amber" style="font-family: var(--font-mono); font-size: var(--text-xs);">⧗ in progress</span>
+                                @else
+                                    <span class="t-muted" style="font-family: var(--font-mono); font-size: var(--text-xs);">◎ completed</span>
+                                @endif
+                                @if (!empty($project['github']))
+                                    <span class="t-cyan" style="font-family: var(--font-mono); font-size: var(--text-xs);">⎇ GitHub</span>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+    @endforeach
 @endsection

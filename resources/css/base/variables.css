@@ -1,0 +1,78 @@
+/* ============================================================
+   Design Tokens -- Dark theme (default) + Solarized Light
+   ============================================================ */
+
+:root {
+  /* --- Colors (Dark) --- */
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-input: #0d1117;
+  --text-primary: #e6edf3;
+  --text-green: #4ade80;
+  --text-green-bright: #22c55e;
+  --text-cyan: #22d3ee;
+  --text-amber: #fbbf24;
+  --text-red: #f87171;
+  --text-muted: #7d8590;
+  --text-white: #ffffff;
+  --border: #30363d;
+  --border-green: rgba(74, 222, 128, 0.3);
+  --glow-green: 0 0 10px rgba(74, 222, 128, 0.3);
+  --glow-cyan: 0 0 10px rgba(34, 211, 238, 0.2);
+
+  /* --- Fonts --- */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* --- Fluid content widths --- */
+  --max-content-width: min(900px, 90vw);
+  --max-content-width-wide: min(1200px, 85vw);
+
+  /* --- Fluid spacing --- */
+  --space-xs: clamp(4px, 0.5vw, 8px);
+  --space-sm: clamp(8px, 1vw, 16px);
+  --space-md: clamp(16px, 2.5vw, 32px);
+  --space-lg: clamp(24px, 4vw, 48px);
+  --space-xl: clamp(32px, 5vw, 64px);
+  --space-section: clamp(40px, 8vw, 96px);
+
+  /* --- Fluid typography --- */
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --text-base: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+  --text-lg: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.15rem, 1rem + 0.75vw, 1.5rem);
+  --text-2xl: clamp(1.4rem, 1.1rem + 1.5vw, 2rem);
+  --text-3xl: clamp(1.75rem, 1.3rem + 2.25vw, 2.5rem);
+  --text-hero: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  --text-terminal: clamp(12px, 11px + 0.3vw, 15px);
+
+  /* --- Transitions --- */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+
+  /* --- Fluid grid --- */
+  --grid-gap: clamp(12px, 1.5vw, 24px);
+  --card-min-width: clamp(260px, 25vw, 340px);
+}
+
+/* --- Solarized Light Theme --- */
+[data-theme="light"] {
+  --bg-primary: #fdf6e3;
+  --bg-secondary: #eee8d5;
+  --bg-tertiary: #ddd6c1;
+  --bg-input: #fdf6e3;
+  --text-primary: #657b83;
+  --text-green: #859900;
+  --text-green-bright: #6d8200;
+  --text-cyan: #2aa198;
+  --text-amber: #b58900;
+  --text-red: #dc322f;
+  --text-muted: #93a1a1;
+  --text-white: #073642;
+  --border: #d3cbb7;
+  --border-green: rgba(133, 153, 0, 0.3);
+  --glow-green: 0 0 10px rgba(133, 153, 0, 0.15);
+  --glow-cyan: 0 0 10px rgba(42, 161, 152, 0.15);
+}

@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ContactRequest;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    public function submit(Request $request)
+    public function submit(ContactRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:2000',
-        ]);
+        if ($request->filled('website')) {
+            return response()->json(['message' => 'Message sent successfully!']);
+        }
+
+        $validated = $request->validated();
+        $validated = array_map(fn ($v) => strip_tags($v), $validated);
+
+        foreach (['name', 'email', 'subject'] as $field) {
+            $validated[$field] = str_replace(["\r", "\n"], '', $validated[$field]);
+        }
 
         Mail::raw(
             "Name: {$validated['name']}\nEmail: {$validated['email']}\nSubject: {$validated['subject']}\n\n{$validated['message']}",

@@ -1,30 +1,53 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
-@section('meta_description', 'Home page description')
+@section('title', 'Rishan Thirukumar — Portfolio')
+@section('meta_description', 'Computer Science Graduate & Software Developer — interactive terminal-themed portfolio.')
 
-@section('content')
-    @include('components.mobile-menu-button')
+@section('raw')
+<div class="terminal-frame terminal-shell">
+    {{-- Desktop: interactive terminal (>= 768px) --}}
+    <div class="desktop-only terminal-page"
+         x-data="terminal()"
+         x-init="init()"
+         @click="focusInput()">
 
-    <div class="main-content">
-        @include('components.homepage-banner')
+        <div class="terminal-output" x-ref="output">
+            <template x-for="(line, idx) in history" :key="idx">
+                <div x-html="line.html"></div>
+            </template>
+            <template x-if="loading">
+                <div><span class="t-muted">Loading filesystem...</span></div>
+            </template>
+        </div>
 
-        {{-- Optional future content (uncomment if needed) --}}
-        {{--
-        <p>Purpose for this website</p>
-        <p>Brief summary about skills and passions</p>
-
-        <p>You can view the list of skills I have acquired over my time programming.</p>
-        <a href="{{ route('skills') }}"><i class="fa-solid fa-rectangle-list"></i><span>Skills</span></a>
-
-        <p>You can view some of the projects I have worked on to showcase some of my skills</p>
-        <a href="{{ route('projects') }}"><i class="fa-solid fa-rectangle-list"></i><span>Projects</span></a>
-
-        <p>The brief from about me section</p>
-        <a href="{{ route('aboutme') }}"><i class="fa-solid fa-rectangle-list"></i><span>About Me</span></a>
-
-        <p>I will soon be starting my own blog about technologies I am currently interested in and researching.</p>
-        <a href="{{ route('blog') }}"><i class="fa-solid fa-rectangle-list"></i><span>Blog</span></a>
-        --}}
+        <div class="terminal-input-line">
+            <span class="terminal-prompt" x-html="prompt + '&nbsp;'"></span>
+            <input class="terminal-input"
+                   type="text"
+                   x-model="input"
+                   @keydown.enter="execute()"
+                   @keydown.up.prevent="historyUp()"
+                   @keydown.down.prevent="historyDown()"
+                   @keydown.tab.prevent="tabComplete()"
+                   autocomplete="off"
+                   autocorrect="off"
+                   autocapitalize="off"
+                   spellcheck="false"
+                   autofocus>
+        </div>
     </div>
+
+    {{-- Mobile fallback (< 768px) --}}
+    <div class="mobile-only mobile-home">
+        <h1 class="t-green">Rishan Thirukumar</h1>
+        <p class="mobile-subtitle">Computer Science Graduate &amp; Software Developer</p>
+        <p class="mobile-tagline">I build things for the web and beyond.</p>
+        <nav class="mobile-nav-commands">
+            <a href="/projects"  class="command-link">$ cd projects/</a>
+            <a href="/skills"    class="command-link">$ cd skills/</a>
+            <a href="/aboutme"   class="command-link">$ cd aboutme/</a>
+            <a href="/contactme" class="command-link">$ cd contactme/</a>
+        </nav>
+    </div>
+</div>
 @endsection

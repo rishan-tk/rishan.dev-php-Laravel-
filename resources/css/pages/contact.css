@@ -1,15 +1,72 @@
-.socials ul > li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    width: 100%;
-    padding: 0 10px;
+/* ============================================================
+   Contact -- form-first layout with social links
+   ============================================================ */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
 }
-.socials .caption {
-    width: 100%;
+
+@media (min-width: 768px) {
+  .contact-layout {
+    grid-template-columns: 2fr 1fr;
+  }
 }
-.socials .links {
-    width: 100%;
+
+/* Two-column name + email row inside form at >= 640px */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Submit full-width on mobile, auto on desktop */
+.form-btn {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .form-btn {
+    width: auto;
+  }
+}
+
+.contact-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  padding: var(--space-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: 48px;
+}
+
+.contact-link:hover {
+  border-color: var(--border-green);
+  box-shadow: var(--glow-green);
+  color: var(--text-green);
+}
+
+.contact-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }

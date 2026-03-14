@@ -1,0 +1,119 @@
+/* ============================================================
+   Responsive -- layout-shift breakpoints ONLY.
+   All sizing (typography, spacing) is fluid via clamp() in variables.css.
+   ============================================================ */
+
+/* ── Base (0-639px: compact mobile) ─────────────────────────────────────────── */
+
+.page-content {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: var(--space-lg);
+}
+
+.page-content--wide {
+  max-width: var(--max-content-width-wide);
+}
+
+/* Safe-area insets for notched / Dynamic Island devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .terminal-frame,
+  .mobile-home,
+  .terminal-page {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+
+  .terminal-titlebar {
+    padding-left: max(var(--space-sm), env(safe-area-inset-left));
+    padding-right: max(var(--space-sm), env(safe-area-inset-right));
+  }
+}
+
+/* Full-height with dvh fallback */
+.terminal-shell,
+.terminal-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Desktop terminal hidden on mobile, mobile fallback shown */
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Touch targets -- minimum 44×44px (WCAG 2.5.8) */
+.terminal-tab,
+.hamburger,
+.theme-toggle,
+.contact-link,
+.form-btn,
+.command-link {
+  min-height: 44px;
+}
+
+/* ── 640px+ (large mobile / small tablet) ───────────────────────────────────── */
+/* Foldables open screen (~717px) also lands here */
+
+@media (min-width: 640px) {
+  .page-content {
+    padding-inline: var(--space-lg);
+  }
+}
+
+/* ── 768px+ (tablet / small laptop) ─────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  /* About page: two-column 65/35 */
+  .about-layout {
+    grid-template-columns: 65fr 35fr;
+  }
+
+  /* Projects detail: more breathing room */
+  .project-detail {
+    padding-block: var(--space-xl);
+  }
+}
+
+/* ── 1024px+ (desktop) ───────────────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .page-content {
+    padding-inline: var(--space-xl);
+  }
+}
+
+/* ── 1440px+ (large desktop / 1440p) ────────────────────────────────────────── */
+
+@media (min-width: 1440px) {
+  .card-grid,
+  .page-content--wide {
+    max-width: var(--max-content-width-wide);
+  }
+}
+
+/* ── 2560px+ (4K / Ultrawide / 8K) ──────────────────────────────────────────── */
+/* Scale up base font-size so UI doesn't look tiny on large displays */
+
+@media (min-width: 2560px) {
+  :root {
+    --max-content-width: min(1000px, 60vw);
+    --max-content-width-wide: min(1400px, 70vw);
+    --text-terminal: clamp(14px, 0.4vw, 18px);
+  }
+
+  html {
+    font-size: clamp(18px, 0.85vw, 24px);
+  }
+}
