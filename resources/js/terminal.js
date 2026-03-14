@@ -225,6 +225,7 @@ export default function terminal() {
   <span class="t-cyan">matrix -t</span> <span class="t-muted">&lt;secs&gt;</span>   Run for specified seconds
   <span class="t-cyan">matrix --unlim</span>    Run until any key pressed
   <span class="t-cyan">history</span>           Show command history
+  <span class="t-cyan">boot</span>              Toggle boot sequence on/off
   <span class="t-cyan">boot --enable</span>     Enable boot sequence on next visit
   <span class="t-cyan">boot --disable</span>    Disable boot sequence
   <span class="t-cyan">theme</span> <span class="t-muted">&lt;light|dark|toggle&gt;</span>   Switch colour theme
@@ -551,7 +552,9 @@ export default function terminal() {
       const onKey = () => stop();
 
       if (unlimited) {
-        document.addEventListener('keydown', onKey, { once: true });
+        setTimeout(() => {
+          document.addEventListener('keydown', onKey, { once: true });
+        }, 0);
       } else {
         setTimeout(stop, duration);
       }
@@ -570,14 +573,23 @@ export default function terminal() {
 
     // ── boot ──────────────────────────────────────────────────────────────────
     cmdBoot(args) {
+      const current = isBootEnabled();
       if (args[0] === '--enable') {
         localStorage.removeItem('boot_enabled');
         this.push('<span class="t-green">Boot sequence enabled. Will run on next visit.</span>');
       } else if (args[0] === '--disable') {
         localStorage.setItem('boot_enabled', '0');
         this.push('<span class="t-muted">Boot sequence disabled.</span>');
+      } else if (!args[0]) {
+        if (current) {
+          localStorage.setItem('boot_enabled', '0');
+          this.push('<span class="t-muted">Boot sequence disabled.</span>');
+        } else {
+          localStorage.removeItem('boot_enabled');
+          this.push('<span class="t-green">Boot sequence enabled. Will run on next visit.</span>');
+        }
       } else {
-        this.push('<span class="t-muted">Usage: boot --enable | boot --disable</span>');
+        this.push('<span class="t-muted">Usage: boot | boot --enable | boot --disable</span>');
       }
     },
 
