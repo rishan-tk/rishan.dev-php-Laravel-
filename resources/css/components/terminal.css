@@ -5,37 +5,19 @@
 .terminal-page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-primary);
   font-family: var(--font-mono);
   font-size: var(--text-terminal);
   color: var(--text-green);
   padding: var(--space-sm);
-  overflow: hidden;
   cursor: text;
 }
 
-.terminal-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-primary);
-  font-family: var(--font-mono);
-  font-size: var(--text-terminal);
-  color: var(--text-green);
-  padding: var(--space-sm);
-  overflow-y: auto;
-}
-
 .terminal-output {
-  flex: 1;
-  overflow-y: auto;
-  overscroll-behavior: contain;
   white-space: pre-wrap;
   word-break: break-word;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
 }
 
 .terminal-input-line {

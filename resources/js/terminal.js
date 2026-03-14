@@ -66,8 +66,7 @@ export default function terminal() {
     push(html) {
       this.history.push({ html });
       this.$nextTick(() => {
-        const out = this.$refs.output;
-        if (out) out.scrollTop = out.scrollHeight;
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
       });
     },
 
@@ -148,9 +147,11 @@ export default function terminal() {
     cmdHelp() {
       this.push(`<span class="t-green t-bold">Available commands:</span>
 <span class="t-white"></span>
+  <span class="t-cyan">curl</span> <span class="t-muted">&lt;page&gt;</span>         Navigate to a page (e.g. curl /projects)
+<span class="t-white"></span>
   <span class="t-cyan">ls</span> <span class="t-muted">[path]</span>          List directory contents
   <span class="t-cyan">ls -la</span> <span class="t-muted">[path]</span>       Detailed listing with permissions
-  <span class="t-cyan">cd</span> <span class="t-muted">&lt;dir&gt;</span>           Change directory / navigate to page
+  <span class="t-cyan">cd</span> <span class="t-muted">&lt;dir&gt;</span>           Change directory
   <span class="t-cyan">cat</span> <span class="t-muted">&lt;file&gt;</span>          Display file contents (renders markdown)
   <span class="t-cyan">pwd</span>               Print working directory
   <span class="t-cyan">clear</span>             Clear terminal screen
@@ -164,8 +165,7 @@ export default function terminal() {
   <span class="t-cyan">boot --enable</span>     Enable boot sequence on next visit
   <span class="t-cyan">boot --disable</span>    Disable boot sequence
   <span class="t-cyan">theme</span> <span class="t-muted">&lt;light|dark|toggle&gt;</span>   Switch colour theme
-  <span class="t-cyan">echo</span> <span class="t-muted">&lt;text&gt;</span>         Print text
-  <span class="t-cyan">curl</span> <span class="t-muted">&lt;page&gt;</span>         Navigate to a page (e.g. curl /projects)`);
+  <span class="t-cyan">echo</span> <span class="t-muted">&lt;text&gt;</span>         Print text`);
     },
 
     // ── ls ───────────────────────────────────────────────────────────────────
