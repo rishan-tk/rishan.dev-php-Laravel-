@@ -1,15 +1,11 @@
 <div class="terminal-frame">
     {{-- Title bar --}}
     <header class="terminal-titlebar">
-        {{-- Traffic-light dots (decorative) --}}
-        <div class="terminal-dots" aria-hidden="true">
-            <span class="terminal-dot--red"></span>
-            <span class="terminal-dot--yellow"></span>
-            <span class="terminal-dot--green"></span>
-        </div>
+        {{-- Linux-style window title --}}
+        <span class="terminal-title">visitor@rishan.dev:~/{{ $path ?: 'home' }}</span>
 
         {{-- Tab navigation --}}
-        <nav class="terminal-tabs" :data-open="mobileMenu ? 'true' : 'false'" @click.outside="mobileMenu = false">
+        <nav class="terminal-tabs" :data-open="mobileMenu ? 'true' : 'false'">
             @foreach ($tabs as $tab)
                 <a href="{{ $tab['href'] }}"
                    class="terminal-tab {{ $isActive($tab) ? 'terminal-tab--active' : '' }}"
