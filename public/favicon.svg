@@ -1,26 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Solid dark background -->
   <rect width="100" height="100" fill="#0d1117"/>
 
-  <!--
-    R in ??????? block style.
-    Shadow layer: dark green (#166534) offset +3,+3
-    Bright layer: neon green (#4ade80) on top
-
-    R structure (bright layer coords):
-      Stem:       x=16, y=12, w=11, h=76
-      Top bar:    x=16, y=12, w=52, h=11
-      Bump right: x=57, y=12, w=11, h=11  (top-right corner block)
-      Bump side:  x=57, y=12, w=11, h=34  (right side of bump)
-      Mid bar:    x=16, y=35, w=52, h=11
-      Bump close: x=57, y=35, w=11, h=11  (bottom-right corner of bump)
-      Inner hole: filled with bg colour x=27,y=23,w=30,h=12
-      Leg step 1: x=41, y=46, w=16, h=11
-      Leg step 2: x=51, y=57, w=16, h=11
-      Leg step 3: x=57, y=68, w=16, h=20
-  -->
-
-  <!-- Shadow layer (offset +3,+3) -->
+  <!-- Shadow layer -->
   <rect x="19" y="15" width="11" height="76" fill="#166534"/>
   <rect x="19" y="15" width="52" height="11" fill="#166534"/>
   <rect x="60" y="15" width="11" height="34" fill="#166534"/>
@@ -38,6 +19,6 @@
   <rect x="51" y="57" width="16" height="11" fill="#4ade80"/>
   <rect x="57" y="68" width="16" height="20" fill="#4ade80"/>
 
-  <!-- Inner hole of the R bump (background colour cutout) -->
+  <!-- Inner hole cutout -->
   <rect x="27" y="23" width="30" height="12" fill="#0d1117"/>
 </svg>
