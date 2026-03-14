@@ -8,7 +8,6 @@
     {{-- Desktop: interactive terminal (>= 768px) --}}
     <div class="desktop-only terminal-page"
          x-data="terminal()"
-         x-init="init()"
          @click="focusInput()">
 
         <div class="terminal-output" x-ref="output">

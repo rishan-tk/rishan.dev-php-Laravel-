@@ -29,8 +29,13 @@
 }
 
 .terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   white-space: pre-wrap;
   word-break: break-word;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
 .terminal-input-line {
