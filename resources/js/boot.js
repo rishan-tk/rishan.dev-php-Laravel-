@@ -27,26 +27,30 @@ export async function runBoot(pushFn) {
   await delay(300);
 
   // Phase 3: welcome text typed out character by character
+  // Text is split into segments: plain muted text and the amber "help" word.
+  // Each segment gets its own span so innerHTML is never clobbered by textContent writes.
   pushFn('');
-  const welcomeText = 'Welcome to rishan.dev \u2014 type help to get started.';
-  const welcomeId = `boot-welcome-${Date.now()}`;
-  pushFn(`<span class="t-muted" id="${welcomeId}"></span>`);
+  const segments = [
+    { text: 'Welcome to rishan.dev \u2014 type ', cls: 't-muted' },
+    { text: 'help', cls: 't-amber' },
+    { text: ' to get started.', cls: 't-muted' },
+  ];
+
+  const wrapperId = `boot-welcome-${Date.now()}`;
+  // Pre-build empty spans for each segment so we can fill them by index
+  const innerHtml = segments
+    .map((s, i) => `<span class="${s.cls}" id="${wrapperId}-${i}"></span>`)
+    .join('');
+  pushFn(`<span id="${wrapperId}">${innerHtml}</span>`);
 
   await delay(200);
-  const el = document.getElementById(welcomeId);
-  if (el) {
-    for (let i = 0; i < welcomeText.length; i++) {
-      const char = welcomeText[i];
-      if (char === 'h' && welcomeText.substring(i, i + 4) === 'help') {
-        el.innerHTML += '<span class="t-amber">help</span>';
-        i += 3;
-      } else {
-        el.textContent += char;
-      }
+  for (let s = 0; s < segments.length; s++) {
+    const el = document.getElementById(`${wrapperId}-${s}`);
+    if (!el) continue;
+    for (const char of segments[s].text) {
+      el.textContent += char;
       await delay(25 + Math.random() * 20);
     }
-  } else {
-    pushFn(`<span class="t-muted">Welcome to rishan.dev — type <span class="t-amber">help</span> to get started.</span>`);
   }
   pushFn('');
 }
