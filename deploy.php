@@ -13,8 +13,9 @@ add('shared_files', ['database/database.sqlite']);
 
 // Hosts
 host('production')
-    ->set('hostname', '82.29.53.130')
+    ->set('hostname', getenv('SERVER_HOST'))
     ->set('remote_user', 'deploy')
+    ->set('port', (int) getenv('SERVER_PORT'))
     ->set('deploy_path', '/var/www/laravel');
 
 
@@ -22,7 +23,7 @@ host('production')
 desc('Install frontend dependencies and build assets');
 task('npm:build', function () {
     within('{{release_path}}', function () {
-        run('npm install --no-progress');
+        run('NODE_ENV=production npm install --no-progress');
         run('npm run build');
     });
 });
