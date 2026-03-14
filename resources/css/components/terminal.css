@@ -36,6 +36,9 @@
   word-break: break-word;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .terminal-input-line {
@@ -127,6 +130,13 @@
   border-color: var(--border-green);
   box-shadow: var(--glow-green);
   color: var(--text-green-bright);
+}
+
+/* Centred ASCII art block */
+.terminal-ascii {
+  text-align: center;
+  margin-block: var(--space-sm);
+  overflow-x: auto;
 }
 
 /* Rendered markdown inside terminal */
