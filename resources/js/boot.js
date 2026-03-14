@@ -1,19 +1,5 @@
-const BOOT_LINES = [
-  '[<span class="t-green">  OK  </span>] Loading kernel modules...',
-  '[<span class="t-green">  OK  </span>] Starting networking...',
-  '[<span class="t-green">  OK  </span>] Mounting /dev/portfolio...',
-  '[<span class="t-green">  OK  </span>] Starting nginx...',
-  '[<span class="t-green">  OK  </span>] Initializing rishan.dev v2.0...',
-];
-
-const RISHAN_LINES = [
-  '  ██████╗ ██╗███████╗██╗  ██╗ █████╗ ███╗   ██╗   ██████╗ ███████╗██╗   ██╗',
-  '  ██╔══██╗██║██╔════╝██║  ██║██╔══██╗████╗  ██║   ██╔══██╗██╔════╝██║   ██║',
-  '  ██████╔╝██║███████╗███████║███████║██╔██╗ ██║   ██║  ██║█████╗  ██║   ██║',
-  '  ██╔══██╗██║╚════██║██╔══██║██╔══██║██║╚██╗██║   ██║  ██║██╔══╝  ╚██╗ ██╔╝',
-  '  ██║  ██║██║███████║██║  ██║██║  ██║██║ ╚████║██╗██████╔╝███████╗ ╚████╔╝',
-  '  ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═════╝ ╚══════╝  ╚═══╝',
-];
+import { BOOT_LINES } from './data/boot-lines.js';
+import { RISHAN_LINES } from './data/ascii-logo.js';
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

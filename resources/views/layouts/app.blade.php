@@ -9,6 +9,9 @@
     <meta name="author" content="Rishan Thirukumar">
     <meta name="theme-color" content="#0d1117">
 
+    {{-- Favicon --}}
+    <link rel="icon" type="image/png" href="/favicon.png">
+
     {{-- Prevent flash of wrong theme --}}
     <script>
       (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.dataset.theme=t})();

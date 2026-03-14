@@ -1,181 +1,7 @@
 import { marked } from 'marked';
 import { runBoot, isBootEnabled } from './boot.js';
-
-// ─── Tux ASCII art — multiple variants per size tier ─────────────────────────
-
-// ── Small tier (< 640px) ─────────────────────────────────────────────────────
-const SMALL_1 = [
-  '    .--.    ',
-  '   |o_o |   ',
-  '   |:_/ |   ',
-  '  //   \\ \\ ',
-  ' (|     | ) ',
-  "/'\\_ _/`\\ ",
-  '\\___)=(___/',
-];
-
-const SMALL_2 = [
-  '      .-.     ',
-  '      oo|     ',
-  "     /`'\\    ",
-  '     (\\_;/)  ',
-];
-
-const SMALL_3 = [
-  '     _._      ',
-  '    /_ _`.    ',
-  '    (.X.)|    ',
-  "    |\\_/'|   ",
-  '    )____`\\  ',
-  '   //_V _\\ \\',
-  '  ((  |  `(_))',
-  '  / \\> \'  / \\',
-  '  \\  \\.__./  /',
-  "  `-'    `-'  ",
-];
-
-// ── Medium tier (640–1199px) ─────────────────────────────────────────────────
-const MEDIUM_1 = [
-  '              a8888b.       ',
-  '             d888888b.      ',
-  '             8P"YP"Y88      ',
-  '             8|o||o|88      ',
-  "             8'    .88      ",
-  "             8`._.' Y8.     ",
-  '            d/      `8b.    ',
-  '          .dP   .     Y8b.  ',
-  '         d8:\'   "   `::88b.',
-  '        d8"           `Y88b ',
-  '       :8P     \'       :888 ',
-  '        8a.    :      _a88P ',
-  '      ._/"Yaa_ :    .| 88P| ',
-  '      \\    YP"      `| 8P `.  ',
-  '      /     \\._____d|    .\'  ',
-  '      `--..__)888888P`._.\' ',
-];
-
-const MEDIUM_2 = [
-  '           _..._         ',
-  "         .'     '.       ",
-  '        /  _   _  \\      ',
-  '        | (o)_(o) |      ',
-  '         \\(     ) /      ',
-  "         //'._.'\\  \\    ",
-  '        //   .   \\ \\    ',
-  '       ||   .     \\ \\   ',
-  '       |\\   :     / |   ',
-  '       \\ `) \'   (`  /_  ',
-  '     _)``".____,.\'"`  (_',
-  '      )     )\'--\'(     ( ',
-  "      '---`      `---`  ",
-];
-
-const MEDIUM_3 = [
-  '           ___           ',
-  '          /\\/\\\\         ',
-  '          L..J |         ',
-  '          |\\_/ |        ',
-  '          |____ \\       ',
-  '         // V  \\ \\     ',
-  '        |_| |   |_|     ',
-  '       /  \\ \'   /  \\  ',
-  '       \\   \\___/   /   ',
-  '        \\__/   \\__/    ',
-];
-
-// ── Large tier (≥ 1200px) ────────────────────────────────────────────────────
-const LARGE_1 = [
-  '                 .88888888:.                ',
-  '                88888888.88888.             ',
-  '              .8888888888888888.            ',
-  '              888888888888888888            ',
-  "              88' _`88'_  `88888           ",
-  '              88 88 88 88  88888            ',
-  '              88_88_::_88_:88888            ',
-  '              88:::,::,:::::8888            ',
-  "              88`:::::::::'`8888            ",
-  "             .88  `::::'    8:88.           ",
-  '            8888            `8:888.         ',
-  "          .8888'             `888888.       ",
-  "         .8888:..  .::.  ...:'8888888:.    ",
-  "        .8888.'     :'     `'::`88:88888   ",
-  "       .8888        '         `.888:8888.  ",
-  '      888:8         .           888:88888  ',
-  '    .888:88        .:           888:88888: ',
-  '    8888888.       ::           88:888888  ',
-  "    `.::.888.      ::          .88888888   ",
-  "   .::::::.888.    ::         :::`8888`.:.  ",
-  "  ::::::::::.888   '         .:::::::::::: ",
-  "  ::::::::::::.8    '      .:8::::::::::::.",
-  ' .::::::::::::::.        .:888:::::::::::::',
-  " :::::::::::::::88:.__..:88888:::::::::::'  ",
-  "  `'.:::::::::::88888888888.88::::::::::'  ",
-  "       `':::_:' -- '' -'-' `':_::::'`     ",
-];
-
-const LARGE_2 = [
-  '                         4MMMMMMMMMMMML            ',
-  '                       4MMMMMMMMMMMMMMMML          ',
-  '                      MMMMMMMMMMMMMMMMMMML         ',
-  '                     4MMMMMMMMMMMMMMMMMMMMM        ',
-  '                    4MMMMMMMMMMMMMMMMMMMMMML       ',
-  '                    MMMMP   MMMMMM   MMMMMMM      ',
-  '                    MMMM MM  MMM  MM  MMMMMM      ',
-  '                    MMMM MM  MMM  MM  MMMMML      ',
-  '                     MMM MP,,,,,,,MM  MMMMMM      ',
-  '                      MM,"          "MMMMMMP      ',
-  "                      MMw           'MMMMMM       ",
-  '                      MM"w         w MMMMMMML     ',
-  '                      MM" w       w " MMMoMMML    ',
-  '                     MMM " wwwwwww "  MMMMMMML    ',
-  '                   MMMP   ".,,,,,,"     MMMMMMMML ',
-  '                  MMMP                    MMMMMMMML',
-  '                MMMMM                      MMMMMMMML',
-  "              MMMMM,,-''             ''-,,MMMMMMMMML",
-  '             MMMMM                          MMMMMMMMML',
-  '            MMMMM                            MMMMMMMMML',
-  '           MMMMM                             MMMMMMMMMM',
-  '           MMMM                               MMMMMMMMMM',
-  '          MMMMM                               MMMMMMMMMML',
-  '         MMMMM                                MMMMMMMMMMM',
-  '         MMMMMM                               MMMMMMMMMMM',
-  '         """"MMMM                             MMMMMMMMMMP ',
-  '        "     ""MMM                            MMMMMMMMP  ',
-];
-
-const LARGE_3 = [
-  '                         ooMMMMMMMooo              ',
-  '                       oMMMMMMMMMMMMMMMoo          ',
-  '                      MMMMMMMMMMMMMMo"MMMo         ',
-  '                     "MMMMMMMMMMMMMMMMMMMMM        ',
-  '                     MMMMMMMMMMMMMMMMMMMMMMo       ',
-  '                     MMMM""MMMMMM"o" MMMMMMM      ',
-  '                     MMo o" MMM"  oo ""MMMMM       ',
-  '                     MM MMo MMM" MMoM "MMMMM       ',
-  '                     MMo"M"o" "" MMM" oMMMMM"      ',
-  '                     oMM M  o" " o "o MMMMMM"      ',
-  '                     oM"o " o "  o "o MMMMMMM      ',
-  '                     oMMoM o " M M "o MMMM"MMo     ',
-  '                      Mo " M "M "o" o  MMMoMMMo    ',
-  '                     MMo " "" M "       MMMMMMMo   ',
-  '                   oMM"   "o o "         MMMMMMMM  ',
-  '                  MMM"                    MMMMMMMMo ',
-  '                oMMMo                     "MMMMMMMMo',
-  '               MMMMM o             "  " o" "MMMMMMMMMo',
-  '              MMMMM          "            " "MMMMMMMMMo',
-  '             oMMMM                          ""MMMMMMMMMo',
-  '            oMMMM         o         o         MMoMMMMMMM',
-  '            MMMM               o              "MMMMMMMMMM',
-  '           MMMM"     o    o             o     "MMMMMMMMMMo',
-  '         oMMMMM                                MMMMMMMMMMo',
-  '         MMM"MM                               "MMM"MMMMMMM',
-  '         MMMMMM           "      o   "         MMMMMMMMMMM',
-];
-
-// ── Tier selection ───────────────────────────────────────────────────────────
-const TIER_SMALL  = [SMALL_1, SMALL_2, SMALL_3];
-const TIER_MEDIUM = [MEDIUM_1, MEDIUM_2, MEDIUM_3];
-const TIER_LARGE  = [LARGE_1, LARGE_2, LARGE_3];
+import { TIER_SMALL, TIER_MEDIUM, TIER_LARGE } from './data/ascii-tux.js';
+import { RISHAN_ASCII } from './data/ascii-logo.js';
 
 function getTier() {
   const w = window.innerWidth;
@@ -183,14 +9,6 @@ function getTier() {
   if (w < 1200) return TIER_MEDIUM;
   return TIER_LARGE;
 }
-
-// ─── RISHAN.DEV ASCII art ─────────────────────────────────────────────────────
-const RISHAN_ASCII = `<div class="terminal-ascii"><span class="t-green t-bold">  ██████╗ ██╗███████╗██╗  ██╗ █████╗ ███╗   ██╗   ██████╗ ███████╗██╗   ██╗
-  ██╔══██╗██║██╔════╝██║  ██║██╔══██╗████╗  ██║   ██╔══██╗██╔════╝██║   ██║
-  ██████╔╝██║███████╗███████║███████║██╔██╗ ██║   ██║  ██║█████╗  ██║   ██║
-  ██╔══██╗██║╚════██║██╔══██║██╔══██║██║╚██╗██║   ██║  ██║██╔══╝  ╚██╗ ██╔╝
-  ██║  ██║██║███████║██║  ██║██║  ██║██║ ╚████║██╗██████╔╝███████╗ ╚████╔╝
-  ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═════╝ ╚══════╝  ╚═══╝</span></div>`;
 
 // ─── marked config (no HTML sanitization -- our own content only) ─────────────
 marked.setOptions({ breaks: true, gfm: true });
@@ -205,8 +23,9 @@ export default function terminal() {
     cwd: '~',
     fs: null,            // virtual filesystem tree from API
     loading: true,
-    booting: false,      // true while boot sequence is running
-    _fetchInterval: null, // cycling Tux animation interval
+    booting: false,           // true while boot sequence is running
+    _fetchInterval: null,     // cycling Tux animation interval
+    _fetchResizeObserver: null, // resize observer for Tux tier swapping
 
     get prompt() {
       return `<span class="t-green">visitor</span><span class="t-white">@</span><span class="t-cyan">rishan.dev</span><span class="t-white">:</span><span class="t-amber">${this.cwd}</span><span class="t-white">$</span>`;
@@ -369,6 +188,8 @@ export default function terminal() {
         case 'clear':
           clearInterval(this._fetchInterval);
           this._fetchInterval = null;
+          this._fetchResizeObserver?.disconnect();
+          this._fetchResizeObserver = null;
           return (this.history = []);
         case 'whoami':    return this.cmdWhoami();
         case 'fastfetch': return this.cmdFastfetch();
@@ -555,6 +376,10 @@ export default function terminal() {
     buildFetch(infoLines, animate) {
       clearInterval(this._fetchInterval);
       this._fetchInterval = null;
+      if (this._fetchResizeObserver) {
+        this._fetchResizeObserver.disconnect();
+        this._fetchResizeObserver = null;
+      }
 
       const tier = getTier();
       const tuxLines = tier[0];
@@ -572,36 +397,56 @@ export default function terminal() {
       }
       html += '</div></div>';
 
-      if (animate) {
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!reducedMotion) this.$nextTick(() => {
-          let cycleIdx = 0;
-          let prevTier = tier;
+      this.$nextTick(() => {
+        const pre = document.getElementById(id);
+        if (!pre) return;
 
-          this._fetchInterval = setInterval(() => {
-            const pre = document.getElementById(id);
-            if (!pre) {
-              clearInterval(this._fetchInterval);
-              this._fetchInterval = null;
-              return;
-            }
-
-            const currentTier = getTier();
-            if (currentTier !== prevTier) {
-              cycleIdx = 0;
-              prevTier = currentTier;
-            } else {
-              cycleIdx = (cycleIdx + 1) % currentTier.length;
-            }
-
+        // Respond to window resize — swap tier immediately
+        let activeTier = getTier();
+        this._fetchResizeObserver = new ResizeObserver(() => {
+          const newTier = getTier();
+          if (newTier !== activeTier) {
+            activeTier = newTier;
             pre.style.opacity = '0';
             setTimeout(() => {
-              pre.textContent = currentTier[cycleIdx].join('\n');
+              pre.textContent = activeTier[0].join('\n');
               pre.style.opacity = '1';
-            }, 280);
-          }, 2400);
+            }, 150);
+          }
         });
-      }
+        this._fetchResizeObserver.observe(document.documentElement);
+
+        if (animate) {
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!reducedMotion) {
+            let cycleIdx = 0;
+
+            this._fetchInterval = setInterval(() => {
+              if (!document.getElementById(id)) {
+                clearInterval(this._fetchInterval);
+                this._fetchInterval = null;
+                this._fetchResizeObserver?.disconnect();
+                this._fetchResizeObserver = null;
+                return;
+              }
+
+              const currentTier = getTier();
+              if (currentTier !== activeTier) {
+                activeTier = currentTier;
+                cycleIdx = 0;
+              } else {
+                cycleIdx = (cycleIdx + 1) % currentTier.length;
+              }
+
+              pre.style.opacity = '0';
+              setTimeout(() => {
+                pre.textContent = currentTier[cycleIdx].join('\n');
+                pre.style.opacity = '1';
+              }, 280);
+            }, 2400);
+          }
+        }
+      });
 
       return html;
     },
