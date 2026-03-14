@@ -118,10 +118,22 @@
   overflow-x: auto;
 }
 
+/* Generic centering wrapper for rich output blocks */
+.terminal-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+  margin-inline: auto;
+  white-space: pre;
+}
+
 /* Rendered markdown inside terminal */
 .terminal-md {
   line-height: 1.6;
   max-width: 70ch;
+  width: 100%;
+  white-space: normal;
 }
 
 .terminal-md h1, .terminal-md h2, .terminal-md h3 {
@@ -135,3 +147,46 @@
 .terminal-md code { color: var(--text-cyan); }
 .terminal-md ul, .terminal-md ol { padding-left: 1.5em; color: var(--text-primary); }
 .terminal-md strong { color: var(--text-green); font-weight: 700; }
+
+/* neofetch / fastfetch two-column layout */
+.fetch-output {
+  display: flex;
+  flex-direction: row;
+  gap: 2ch;
+  align-items: flex-start;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.fetch-ascii {
+  flex-shrink: 0;
+  line-height: 1.4;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: inherit;
+  color: var(--text-primary);
+  overflow-x: auto;
+  transition: opacity 0.3s ease;
+  min-width: 12ch;
+}
+
+.fetch-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  font-family: var(--font-mono);
+  font-size: inherit;
+  line-height: 1.4;
+}
+
+.fetch-row {
+  white-space: nowrap;
+}
+
+/* Collapse to stacked on very narrow screens */
+@media (max-width: 480px) {
+  .fetch-output {
+    flex-direction: column;
+    gap: 0.5em;
+  }
+}

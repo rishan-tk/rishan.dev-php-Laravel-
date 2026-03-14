@@ -1,14 +1,78 @@
 import { marked } from 'marked';
 import { runBoot, isBootEnabled } from './boot.js';
 
-// ─── Tux ASCII art ────────────────────────────────────────────────────────────
-const TUX = `<span class="t-white">        .--.
-       |o_o |
-       |:_/ |
-      //   \\ \\
-     (|     | )
-    /'\\_   _/\`\\
-    \\___)=(___/</span>`;
+// ─── Tux ASCII art variants ───────────────────────────────────────────────────
+// Small  (~10 cols) — shown on narrow viewports
+const TUX_SMALL = [
+  '    .--.    ',
+  '   |o_o |   ',
+  '   |:_/ |   ',
+  '  //   \\ \\ ',
+  ' (|     | ) ',
+  "/'\\_ _/`\\ ",
+  '\\___)=(___/',
+];
+
+// Medium (~22 cols) — default, shown on mid-size viewports
+const TUX_MEDIUM = [
+  '              a8888b.       ',
+  '             d888888b.      ',
+  "             8P\"YP\"Y88     ",
+  '             8|o||o|88      ',
+  "             8'    .88      ",
+  "             8`._.' Y8.     ",
+  '            d/      `8b.    ',
+  '           dP   .    Y8b.   ',
+  "          d8:'  \"  `::88b  ",
+  "         d8\"         'Y88b  ",
+  ":8P    '      :888       ",
+  "         8a.   :     _a88P  ",
+  '       ._/\"Yaa_:   .| 88P| ',
+  "  jgs  \\    YP\"    `| 8P ` ",
+  "  a:f  /     \\.___.d|    .' ",
+  "       `--..__)8888P`._.'   ",
+];
+
+// Large (~46 cols) — shown on wide viewports (> 1200px)
+const TUX_LARGE = [
+  '                 .88888888:.             ',
+  '                88888888.88888.          ',
+  '              .8888888888888888.         ',
+  '              888888888888888888         ',
+  "              88' _`88'_  `88888        ",
+  '              88 88 88 88  88888         ',
+  '              88_88_::_88_:88888         ',
+  '              88:::,::,:::::8888         ',
+  "              88`:::::::::'`8888         ",
+  "             .88  `::::'    8:88.        ",
+  '            8888            `8:888.      ',
+  "          .8888'             `888888.    ",
+  "         .8888:..  .::.  ...:'8888888:. ",
+  "        .8888.'     :'     `'::`88:88888",
+  "       .8888        '         `.888:8888.",
+  '      888:8         .           888:88888',
+  '    .888:88        .:           888:88888:',
+  '    8888888.       ::           88:888888 ',
+  "    `.::.888.      ::          .88888888  ",
+  '   .::::::.888.    ::         :::`8888`.:.',
+  '  ::::::::::.888   \'         .:::::::::::: ',
+  '  ::::::::::::.8    \'      .:8::::::::::::.',
+  ' .::::::::::::::.        .:888:::::::::::::',
+  ' :::::::::::::::88:.__..:88888:::::::::::\'  ',
+  "  `'.:::::::::::88888888888.88::::::::::' ",
+  "miK     `':::_:' -- '' -'-' `':_::::'\`  ",
+];
+
+// Pick art based on viewport width
+function getTuxVariant() {
+  const w = window.innerWidth;
+  if (w < 640)  return TUX_SMALL;
+  if (w < 1200) return TUX_MEDIUM;
+  return TUX_LARGE;
+}
+
+// Cycling variants for animation (small→medium→large→medium loop or same-size swap)
+const TUX_CYCLE = [TUX_SMALL, TUX_MEDIUM, TUX_LARGE];
 
 // ─── RISHAN.DEV ASCII art ─────────────────────────────────────────────────────
 const RISHAN_ASCII = `<div class="terminal-ascii"><span class="t-green t-bold">  ██████╗ ██╗███████╗██╗  ██╗ █████╗ ███╗   ██╗   ██████╗ ███████╗██╗   ██╗
@@ -31,6 +95,7 @@ export default function terminal() {
     cwd: '~',
     fs: null,            // virtual filesystem tree from API
     loading: true,
+    _fetchInterval: null, // cycling Tux animation interval
 
     get prompt() {
       return `<span class="t-green">visitor</span><span class="t-white">@</span><span class="t-cyan">rishan.dev</span><span class="t-white">:</span><span class="t-amber">${this.cwd}</span><span class="t-white">$</span>`;
@@ -177,7 +242,10 @@ export default function terminal() {
         case 'cd':        return this.cmdCd(args);
         case 'cat':       return this.cmdCat(args);
         case 'pwd':       return this.push(`<span class="t-white">/home/${this.cwd.replace('~', 'visitor')}</span>`);
-        case 'clear':     return (this.history = []);
+        case 'clear':
+          clearInterval(this._fetchInterval);
+          this._fetchInterval = null;
+          return (this.history = []);
         case 'whoami':    return this.cmdWhoami();
         case 'fastfetch': return this.cmdFastfetch();
         case 'neofetch':  return this.cmdNeofetch();
@@ -299,7 +367,7 @@ export default function terminal() {
         // Strip any HTML before parsing markdown
         const safeText = text.replace(/<[^>]+>/g, '');
         const html = marked.parse(safeText);
-        this.push(`<div class="terminal-md">${html}</div>`);
+        this.push(`<div class="terminal-centered"><div class="terminal-md">${html}</div></div>`);
       } catch {
         this.push(`<span class="t-red">cat: ${this.escHtml(args[0])}: No such file or directory</span>`);
       }
@@ -308,12 +376,13 @@ export default function terminal() {
     // ── whoami ───────────────────────────────────────────────────────────────
     cmdWhoami() {
       this.push(RISHAN_ASCII);
-      this.push('');
-      this.push(`  <span class="t-white t-bold">Rishan Thirukumar</span>`);
-      this.push(`  <span class="t-muted">Computer Science Graduate &amp; Software Developer</span>`);
-      this.push(`  <span class="t-cyan">Email:</span>    <span class="t-white">rishan-tk@rishan.dev</span>`);
-      this.push(`  <span class="t-cyan">GitHub:</span>   <span class="t-white">github.com/rishan-tk</span>`);
-      this.push(`  <span class="t-cyan">LinkedIn:</span> <span class="t-white">linkedin.com/in/rishan-thirukumar</span>`);
+      this.push(`<div class="terminal-centered">
+  <span class="t-white t-bold">Rishan Thirukumar</span>
+  <span class="t-muted">Computer Science Graduate &amp; Software Developer</span>
+  <span class="t-cyan">Email:</span>    <span class="t-white">rishan-tk@rishan.dev</span>
+  <span class="t-cyan">GitHub:</span>   <span class="t-white">github.com/rishan-tk</span>
+  <span class="t-cyan">LinkedIn:</span> <span class="t-white">linkedin.com/in/rishan-thirukumar</span>
+</div>`);
       this.push('');
     },
 
@@ -322,39 +391,91 @@ export default function terminal() {
       const ip = await this.fetchIp();
       const now = new Date();
       const uptime = this.calcUptime();
-      this.push(
-`${TUX}         <span class="t-green t-bold">visitor</span><span class="t-white">@</span><span class="t-cyan">rishan.dev</span>
-         <span class="t-muted">-------------------</span>
-         <span class="t-cyan">OS:</span>          <span class="t-white">rishan.dev GNU/Linux 2.0 (Portfolio)</span>
-         <span class="t-cyan">Host:</span>        <span class="t-white">Cloudflare + Nginx + PHP-FPM</span>
-         <span class="t-cyan">Kernel:</span>      <span class="t-white">Laravel 12.x</span>
-         <span class="t-cyan">Uptime:</span>      <span class="t-white">${uptime}</span>
-         <span class="t-cyan">Packages:</span>    <span class="t-white">12 (skills)</span>
-         <span class="t-cyan">Shell:</span>       <span class="t-white">rishan.dev/terminal v2.0</span>
-         <span class="t-cyan">Resolution:</span>  <span class="t-white">${window.screen.width}x${window.screen.height}</span>
-         <span class="t-cyan">Terminal:</span>    <span class="t-white">browser (Alpine.js + marked)</span>
-         <span class="t-cyan">CPU:</span>         <span class="t-white">${navigator.hardwareConcurrency || '?'}-core logical processor</span>
-         <span class="t-cyan">Memory:</span>      <span class="t-white">${navigator.deviceMemory ? navigator.deviceMemory + ' GB (approx)' : 'unknown'}</span>
-         <span class="t-cyan">Local IP:</span>    <span class="t-white">${ip}</span>
-         <span class="t-cyan">Locale:</span>      <span class="t-white">${navigator.language}</span>
-         <span class="t-cyan">Time:</span>        <span class="t-white">${now.toLocaleTimeString()}</span>
-         <span class="t-cyan">Theme:</span>       <span class="t-white">${document.documentElement.dataset.theme || 'dark'}</span>`
-      );
+      const infoLines = [
+        `<span class="t-green t-bold">visitor</span><span class="t-white">@</span><span class="t-cyan">rishan.dev</span>`,
+        `<span class="t-muted">-------------------</span>`,
+        `<span class="t-cyan">OS:</span>          <span class="t-white">rishan.dev GNU/Linux 2.0 (Portfolio)</span>`,
+        `<span class="t-cyan">Host:</span>        <span class="t-white">Cloudflare + Nginx + PHP-FPM</span>`,
+        `<span class="t-cyan">Kernel:</span>      <span class="t-white">Laravel 12.x</span>`,
+        `<span class="t-cyan">Uptime:</span>      <span class="t-white">${uptime}</span>`,
+        `<span class="t-cyan">Packages:</span>    <span class="t-white">12 (skills)</span>`,
+        `<span class="t-cyan">Shell:</span>       <span class="t-white">rishan.dev/terminal v2.0</span>`,
+        `<span class="t-cyan">Resolution:</span>  <span class="t-white">${window.screen.width}x${window.screen.height}</span>`,
+        `<span class="t-cyan">Terminal:</span>    <span class="t-white">browser (Alpine.js + marked)</span>`,
+        `<span class="t-cyan">CPU:</span>         <span class="t-white">${navigator.hardwareConcurrency || '?'}-core logical processor</span>`,
+        `<span class="t-cyan">Memory:</span>      <span class="t-white">${navigator.deviceMemory ? navigator.deviceMemory + ' GB (approx)' : 'unknown'}</span>`,
+        `<span class="t-cyan">Local IP:</span>    <span class="t-white">${ip}</span>`,
+        `<span class="t-cyan">Locale:</span>      <span class="t-white">${navigator.language}</span>`,
+        `<span class="t-cyan">Time:</span>        <span class="t-white">${now.toLocaleTimeString()}</span>`,
+        `<span class="t-cyan">Theme:</span>       <span class="t-white">${document.documentElement.dataset.theme || 'dark'}</span>`,
+      ];
+      this.push(this.buildFetch(infoLines));
     },
 
     // ── neofetch ──────────────────────────────────────────────────────────────
     async cmdNeofetch() {
       const uptime = this.calcUptime();
-      this.push(
-`${TUX}         <span class="t-green t-bold">visitor</span><span class="t-white">@</span><span class="t-cyan">rishan.dev</span>
-         <span class="t-muted">-------------------</span>
-         <span class="t-cyan">OS:</span>     <span class="t-white">rishan.dev GNU/Linux</span>
-         <span class="t-cyan">Kernel:</span> <span class="t-white">Laravel 12.x</span>
-         <span class="t-cyan">Uptime:</span> <span class="t-white">${uptime}</span>
-         <span class="t-cyan">Shell:</span>  <span class="t-white">rishan.dev/terminal</span>
-         <span class="t-cyan">CPU:</span>    <span class="t-white">${navigator.hardwareConcurrency || '?'}-core</span>
-         <span class="t-cyan">Memory:</span> <span class="t-white">${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'unknown'}</span>`
-      );
+      const infoLines = [
+        `<span class="t-green t-bold">visitor</span><span class="t-white">@</span><span class="t-cyan">rishan.dev</span>`,
+        `<span class="t-muted">-------------------</span>`,
+        `<span class="t-cyan">OS:</span>     <span class="t-white">rishan.dev GNU/Linux</span>`,
+        `<span class="t-cyan">Kernel:</span> <span class="t-white">Laravel 12.x</span>`,
+        `<span class="t-cyan">Uptime:</span> <span class="t-white">${uptime}</span>`,
+        `<span class="t-cyan">Shell:</span>  <span class="t-white">rishan.dev/terminal</span>`,
+        `<span class="t-cyan">CPU:</span>    <span class="t-white">${navigator.hardwareConcurrency || '?'}-core</span>`,
+        `<span class="t-cyan">Memory:</span> <span class="t-white">${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'unknown'}</span>`,
+      ];
+      this.push(this.buildFetch(infoLines));
+    },
+
+    buildFetch(infoLines) {
+      // Kill any previous cycling interval
+      clearInterval(this._fetchInterval);
+      this._fetchInterval = null;
+
+      const tuxLines = getTuxVariant();
+      const id = `fetch-ascii-${Date.now()}`;
+      const rows = Math.max(tuxLines.length, infoLines.length);
+
+      const renderPre = (lines) =>
+        lines.map(l => this.escHtml(l)).join('\n');
+
+      let html = '<div class="fetch-output">';
+      html += `<pre class="fetch-ascii t-white" id="${id}">${renderPre(tuxLines)}</pre>`;
+      html += '<div class="fetch-info">';
+      for (let i = 0; i < rows; i++) {
+        html += `<div class="fetch-row">${infoLines[i] || ''}</div>`;
+      }
+      html += '</div></div>';
+
+      // Start cycling after render (skip if user prefers reduced motion)
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reducedMotion) this.$nextTick(() => {
+        let cycleIdx = TUX_CYCLE.indexOf(tuxLines);
+        if (cycleIdx === -1) cycleIdx = 0;
+
+        this._fetchInterval = setInterval(() => {
+          const pre = document.getElementById(id);
+          if (!pre) {
+            clearInterval(this._fetchInterval);
+            this._fetchInterval = null;
+            return;
+          }
+          // Fade out, swap art, fade in
+          pre.style.opacity = '0';
+          setTimeout(() => {
+            // On resize, pick the right size; otherwise cycle forward
+            const sized = getTuxVariant();
+            cycleIdx = (cycleIdx + 1) % TUX_CYCLE.length;
+            const target = TUX_CYCLE.indexOf(sized);
+            const show = TUX_CYCLE[Math.abs((target + (cycleIdx % 2 === 0 ? 0 : 1)) % TUX_CYCLE.length)];
+            pre.textContent = show.join('\n');
+            pre.style.opacity = '1';
+          }, 280);
+        }, 1200);
+      });
+
+      return html;
     },
 
     // ── curl ─────────────────────────────────────────────────────────────────
@@ -477,10 +598,10 @@ export default function terminal() {
     // ── boot ──────────────────────────────────────────────────────────────────
     cmdBoot(args) {
       if (args[0] === '--enable') {
-        localStorage.setItem('boot_enabled', '1');
+        localStorage.removeItem('boot_enabled');
         this.push('<span class="t-green">Boot sequence enabled. Will run on next visit.</span>');
       } else if (args[0] === '--disable') {
-        localStorage.removeItem('boot_enabled');
+        localStorage.setItem('boot_enabled', '0');
         this.push('<span class="t-muted">Boot sequence disabled.</span>');
       } else {
         this.push('<span class="t-muted">Usage: boot --enable | boot --disable</span>');

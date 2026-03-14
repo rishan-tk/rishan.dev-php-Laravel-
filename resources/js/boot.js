@@ -18,7 +18,8 @@ function delay(ms) {
 }
 
 export function isBootEnabled() {
-  return localStorage.getItem('boot_enabled') === '1';
+  // Default ON — only disabled when explicitly set to '0'
+  return localStorage.getItem('boot_enabled') !== '0';
 }
 
 export async function runBoot(pushFn) {
