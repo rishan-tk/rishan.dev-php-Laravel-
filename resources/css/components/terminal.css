@@ -36,9 +36,6 @@
   word-break: break-word;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
 .terminal-input-line {
