@@ -137,6 +137,7 @@ export default function terminal() {
         case 'boot':      return this.cmdBoot(args);
         case 'theme':     return this.cmdTheme(args);
         case 'echo':      return this.push(`<span class="t-white">${this.escHtml(args.join(' '))}</span>`);
+        case 'curl':      return this.cmdCurl(args);
         default:
           this.push(`<span class="t-red">bash: ${this.escHtml(cmd)}: command not found</span>`);
           this.push(`<span class="t-muted">Type <span class="t-amber">help</span> for available commands.</span>`);
@@ -163,7 +164,8 @@ export default function terminal() {
   <span class="t-cyan">boot --enable</span>     Enable boot sequence on next visit
   <span class="t-cyan">boot --disable</span>    Disable boot sequence
   <span class="t-cyan">theme</span> <span class="t-muted">&lt;light|dark|toggle&gt;</span>   Switch colour theme
-  <span class="t-cyan">echo</span> <span class="t-muted">&lt;text&gt;</span>         Print text`);
+  <span class="t-cyan">echo</span> <span class="t-muted">&lt;text&gt;</span>         Print text
+  <span class="t-cyan">curl</span> <span class="t-muted">&lt;page&gt;</span>         Navigate to a page (e.g. curl /projects)`);
     },
 
     // ── ls ───────────────────────────────────────────────────────────────────
@@ -316,6 +318,40 @@ export default function terminal() {
          <span class="t-cyan">CPU:</span>    <span class="t-white">${navigator.hardwareConcurrency || '?'}-core</span>
          <span class="t-cyan">Memory:</span> <span class="t-white">${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'unknown'}</span>`
       );
+    },
+
+    // ── curl ─────────────────────────────────────────────────────────────────
+    cmdCurl(args) {
+      if (!args[0]) {
+        return this.push('<span class="t-muted">Usage: curl &lt;page&gt;  e.g. curl /projects</span>');
+      }
+
+      const routeMap = {
+        'projects':  '/projects',
+        'skills':    '/skills',
+        'aboutme':   '/aboutme',
+        'contactme': '/contactme',
+        'blog':      '/blog',
+        '/projects':  '/projects',
+        '/skills':    '/skills',
+        '/aboutme':   '/aboutme',
+        '/contactme': '/contactme',
+        '/blog':      '/blog',
+      };
+
+      // Also strip leading rishan.dev/ or rishan.dev
+      const raw = args[0].replace(/^(https?:\/\/)?(www\.)?rishan\.dev/, '').replace(/\/$/, '') || '/';
+      const key = raw === '' ? '/' : raw;
+      const dest = routeMap[key] ?? routeMap[key.replace(/^\//, '')];
+
+      if (!dest) {
+        return this.push(`<span class="t-red">curl: (6) Could not resolve host: ${this.escHtml(args[0])}</span>`);
+      }
+
+      this.push(`<span class="t-muted">  % Total    % Received  Time</span>`);
+      this.push(`<span class="t-muted">  0     0    0     0     0:00:00</span>`);
+      this.push(`<span class="t-green">Navigating to ${dest}...</span>`);
+      setTimeout(() => { window.location.href = dest; }, 500);
     },
 
     // ── matrix ───────────────────────────────────────────────────────────────
