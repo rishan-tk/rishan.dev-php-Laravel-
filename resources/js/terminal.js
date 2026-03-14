@@ -95,6 +95,7 @@ export default function terminal() {
     cwd: '~',
     fs: null,            // virtual filesystem tree from API
     loading: true,
+    booting: false,      // true while boot sequence is running
     _fetchInterval: null, // cycling Tux animation interval
 
     get prompt() {
@@ -102,6 +103,14 @@ export default function terminal() {
     },
 
     async init() {
+      // Restore persisted command history
+      try {
+        const saved = localStorage.getItem('cmd_history');
+        if (saved) this.cmdHistory = JSON.parse(saved);
+      } catch {
+        localStorage.removeItem('cmd_history');
+      }
+
       // Load virtual filesystem
       try {
         const res = await fetch('/api/terminal/fs');
@@ -113,7 +122,9 @@ export default function terminal() {
 
       // Boot sequence or plain welcome
       if (isBootEnabled()) {
+        this.booting = true;
         await runBoot((line) => this.push(line));
+        this.booting = false;
       } else {
         this.push(RISHAN_ASCII);
         this.push('');
@@ -148,6 +159,9 @@ export default function terminal() {
       // Save to history
       this.cmdHistory.unshift(raw);
       if (this.cmdHistory.length > 100) this.cmdHistory.pop();
+      try {
+        localStorage.setItem('cmd_history', JSON.stringify(this.cmdHistory));
+      } catch { /* storage full or unavailable */ }
 
       const [cmd, ...args] = raw.split(/\s+/);
       this.runCommand(cmd.toLowerCase(), args, raw);

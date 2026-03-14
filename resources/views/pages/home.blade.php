@@ -17,7 +17,7 @@
         </template>
     </div>
 
-    <div class="terminal-input-line">
+    <div class="terminal-input-line" x-show="!loading && !booting">
         <span class="terminal-prompt" x-html="prompt + '&nbsp;'"></span>
         <input class="terminal-input"
                type="text"
